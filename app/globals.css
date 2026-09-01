@@ -162,8 +162,8 @@ body {
 }
 
 .maintenance-orbit {
-  transform-origin: 180px 125px;
-  animation: maintenance-orbit 14s linear infinite;
+  transform-origin: center;
+  animation: maintenance-orbit 18s linear infinite;
 }
 
 @keyframes maintenance-orbit {
