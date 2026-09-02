@@ -25,14 +25,9 @@ export function AnimatedCounter({
   const [display, setDisplay] = useState(isStatic ? String(value) : "0");
 
   useEffect(() => {
-    if (isStatic || typeof value !== "number") {
-      setDisplay(String(value));
-      return;
-    }
+    if (isStatic || typeof value !== "number" || !isInView) return;
 
-    if (!isInView) return;
-
-    let start = 0;
+    const start = 0;
     const end = value;
     const startTime = performance.now();
 

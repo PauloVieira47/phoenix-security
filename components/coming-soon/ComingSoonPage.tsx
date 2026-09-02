@@ -29,19 +29,18 @@ function pad(n: number) {
 }
 
 export function ComingSoonPage() {
-  const [time, setTime] = useState<TimeLeft | null>(null);
+  const [time, setTime] = useState(getTimeLeft);
 
   useEffect(() => {
-    setTime(getTimeLeft());
     const id = setInterval(() => setTime(getTimeLeft()), 1000);
     return () => clearInterval(id);
   }, []);
 
   const units = [
-    { value: time?.days ?? 0, label: "dias" },
-    { value: time?.hours ?? 0, label: "horas" },
-    { value: time?.minutes ?? 0, label: "minutos" },
-    { value: time?.seconds ?? 0, label: "segundos" },
+    { value: time.days, label: "dias" },
+    { value: time.hours, label: "horas" },
+    { value: time.minutes, label: "minutos" },
+    { value: time.seconds, label: "segundos" },
   ];
 
   return (
@@ -99,7 +98,7 @@ export function ComingSoonPage() {
                 className="flex flex-col items-center rounded-2xl border border-white/[0.06] bg-white/[0.025] px-2 py-3.5 sm:px-3 sm:py-4"
               >
                 <span className="font-mono text-2xl font-light tabular-nums tracking-tight text-white sm:text-[1.75rem]">
-                  {time === null ? "—" : pad(unit.value)}
+                  {pad(unit.value)}
                 </span>
                 <span className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-text-secondary/55">
                   {unit.label}
