@@ -19,10 +19,7 @@ export default function FAQPage() {
         label="FAQ"
         title="Perguntas frequentes."
         subtitle="Encontre respostas para as dúvidas mais comuns sobre nossas soluções e serviços."
-        breadcrumbs={[
-          { label: "Início", href: "/" },
-          { label: "FAQ" },
-        ]}
+        breadcrumbs={[{ label: "Início", href: "/" }, { label: "FAQ" }]}
       />
 
       <section className="pb-20">
