@@ -1,13 +1,28 @@
 import { notFound } from "next/navigation";
-import { CheckCircle } from "lucide-react";
 import { createMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SolutionCard } from "@/components/ui/SolutionCard";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { CTASection } from "@/components/sections/CTASection";
+import { SolutionLocalCoverage } from "@/components/sections/solutions/SolutionLocalCoverage";
+import {
+  SegmentDetailHero,
+  SegmentChallenges,
+  SegmentSolutionsList,
+  SegmentBenefits,
+} from "@/components/sections/segments/SegmentDetailSections";
 import { segments, getSegmentBySlug } from "@/data/segments";
-import { solutions } from "@/data/solutions";
+import { getSolutionBySlug } from "@/data/solutions";
+import { localBusiness } from "@/data/local-seo";
+import {
+  breadcrumbSchema,
+  localBusinessSchema,
+  serviceSchema,
+  solutionKeywords,
+  solutionWebPageSchema,
+} from "@/lib/structured-data";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -21,10 +36,12 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const segment = getSegmentBySlug(slug);
   if (!segment) return {};
+
   return createMetadata({
-    title: `${segment.title} | Phoenix Security`,
-    description: segment.shortDescription,
+    title: `Segurança para ${segment.title} em ${localBusiness.city} | Phoenix Security`,
+    description: `${segment.shortDescription} Atendimento em ${localBusiness.city}, ${localBusiness.region} e Grande São Paulo.`,
     path: `/segmentos/${slug}`,
+    keywords: solutionKeywords(`segurança ${segment.title}`),
   });
 }
 
@@ -33,90 +50,89 @@ export default async function SegmentPage({ params }: Props) {
   const segment = getSegmentBySlug(slug);
   if (!segment) notFound();
 
-  const relatedSolutions = solutions.slice(0, 4);
+  const path = `/segmentos/${slug}`;
+  const relatedSolutions = segment.solutionSlugs
+    .map((s) => getSolutionBySlug(s))
+    .filter(Boolean);
+
+  const jsonLd = [
+    breadcrumbSchema([
+      { name: "Início", path: "/" },
+      { name: "Segmentos", path: "/segmentos" },
+      { name: segment.title, path },
+    ]),
+    solutionWebPageSchema({
+      name: `Segurança para ${segment.title} | Phoenix Security`,
+      description: segment.description,
+      path,
+    }),
+    serviceSchema({
+      name: `Segurança para ${segment.title}`,
+      description: segment.description,
+      path,
+      features: segment.solutions,
+    }),
+    localBusinessSchema(),
+  ];
 
   return (
     <>
-      <PageHero
-        label={segment.title}
-        title={`Segurança inteligente para ${segment.title.toLowerCase()}`}
-        subtitle={segment.description}
-        breadcrumbs={[
-          { label: "Início", href: "/" },
-          { label: "Segmentos", href: "/segmentos" },
-          { label: segment.title },
-        ]}
-      />
+      {jsonLd.map((schema) => (
+        <script
+          key={String(schema["@type"]) + path}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
 
-      <section className="py-16">
+      <FadeIn>
+        <PageHero
+          label={segment.title}
+          title={segment.pageTitle}
+          subtitle={segment.pageSubtitle}
+          breadcrumbs={[
+            { label: "Início", href: "/" },
+            { label: "Segmentos", href: "/segmentos" },
+            { label: segment.title },
+          ]}
+        />
+      </FadeIn>
+
+      <SegmentDetailHero segment={segment} />
+      <SegmentChallenges segment={segment} />
+      <SegmentSolutionsList segment={segment} />
+      <SegmentBenefits segment={segment} />
+
+      <section className="border-b border-white/5 py-16 md:py-20">
         <Container>
-          <SectionTitle title="Desafios do segmento" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {segment.challenges.map((challenge) => (
-              <div
-                key={challenge}
-                className="flex items-start gap-3 rounded-xl border border-white/8 bg-bg-card p-5"
-              >
-                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-phoenix" />
-                <p className="text-sm text-text-secondary">{challenge}</p>
-              </div>
-            ))}
+          <FadeIn>
+            <SectionTitle title={segment.relatedTitle} />
+          </FadeIn>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedSolutions.map((solution, index) =>
+              solution ? (
+                <FadeIn key={solution.slug} delay={index * 0.05}>
+                  <SolutionCard
+                    slug={solution.slug}
+                    title={solution.title}
+                    description={solution.shortDescription}
+                    icon={solution.icon}
+                    index={index}
+                  />
+                </FadeIn>
+              ) : null
+            )}
           </div>
         </Container>
       </section>
 
-      <section className="border-y border-white/5 bg-bg-secondary py-16">
-        <Container>
-          <SectionTitle title="Soluções recomendadas" />
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {segment.solutions.map((sol) => (
-              <li
-                key={sol}
-                className="flex items-center gap-3 rounded-xl border border-white/8 bg-bg-card px-5 py-4"
-              >
-                <CheckCircle className="h-5 w-5 shrink-0 text-phoenix" />
-                <span className="text-sm text-white">{sol}</span>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
+      <FadeIn>
+        <SolutionLocalCoverage solutionTitle={`Segurança para ${segment.title}`} />
+      </FadeIn>
 
-      <section className="py-16">
-        <Container>
-          <SectionTitle title="Benefícios" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {segment.benefits.map((benefit) => (
-              <div
-                key={benefit}
-                className="rounded-xl border border-white/8 bg-bg-card p-5"
-              >
-                <p className="text-sm text-text-secondary">{benefit}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-white/5 bg-bg-secondary py-16">
-        <Container>
-          <SectionTitle title="Conheça nossas soluções" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {relatedSolutions.map((solution, index) => (
-              <SolutionCard
-                key={solution.slug}
-                slug={solution.slug}
-                title={solution.title}
-                description={solution.shortDescription}
-                icon={solution.icon}
-                index={index}
-              />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <CTASection />
+      <FadeIn>
+        <CTASection />
+      </FadeIn>
     </>
   );
 }

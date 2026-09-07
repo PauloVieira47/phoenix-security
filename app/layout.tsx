@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import { headers } from "next/headers";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { LoadingGate } from "@/components/layout/PhoenixLoader";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
 import { siteConfig, createMetadata } from "@/lib/seo";
@@ -59,6 +61,8 @@ export default async function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
+            <WhatsAppButton />
+            <CookieConsent />
           </LoadingGate>
         )}
       </body>

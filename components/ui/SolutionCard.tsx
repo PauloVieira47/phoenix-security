@@ -49,19 +49,34 @@ export function SolutionCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ y: -3 }}
     >
       <Link
         href={`/solucoes/${slug}`}
-        className="group flex h-full flex-col rounded-2xl border border-white/8 bg-bg-card p-6 transition-all duration-300 hover:border-phoenix/30 hover:bg-bg-secondary hover:shadow-lg hover:shadow-phoenix/5"
+        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/8 bg-bg-card p-6 transition-colors duration-300 hover:border-phoenix/35"
       >
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-phoenix/10 text-phoenix transition-colors group-hover:bg-phoenix/20">
-          <Icon className="h-6 w-6" />
+        <span
+          aria-hidden
+          className="absolute left-0 top-0 h-full w-px bg-phoenix/0 transition-colors group-hover:bg-phoenix/70"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-1 -top-2 font-mono text-5xl font-bold leading-none text-white/[0.03] transition-colors group-hover:text-phoenix/10"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <div className="mb-4 flex items-center justify-between">
+          <Icon className="h-5 w-5 text-phoenix" />
+          <span className="font-mono text-[10px] text-white/25">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </div>
         <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
-        <p className="mb-4 flex-1 text-sm leading-relaxed text-text-secondary">
+        <p className="mb-5 flex-1 text-sm leading-relaxed text-text-secondary">
           {description}
         </p>
-        <span className="inline-flex items-center gap-1 text-sm font-medium text-phoenix transition-gap group-hover:gap-2">
+        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-phoenix transition-all group-hover:gap-2.5">
           Saiba mais
           <ArrowRight className="h-4 w-4" />
         </span>

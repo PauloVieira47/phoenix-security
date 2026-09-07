@@ -1,38 +1,28 @@
 import { notFound } from "next/navigation";
-import {
-  Shield,
-  KeyRound,
-  Eye,
-  Camera,
-  ScanFace,
-  Users,
-  Bell,
-  Network,
-  CheckCircle,
-  type LucideIcon,
-} from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { createMetadata } from "@/lib/seo";
-import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
-import { SectionTitle } from "@/components/ui/SectionTitle";
-import { FAQAccordion } from "@/components/ui/FAQAccordion";
 import { CTASection } from "@/components/sections/CTASection";
 import { GlowButton } from "@/components/ui/Button";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { solutions, getSolutionBySlug } from "@/data/solutions";
+import { localBusiness } from "@/data/local-seo";
+import {
+  breadcrumbSchema,
+  localBusinessSchema,
+  serviceSchema,
+  solutionKeywords,
+  solutionWebPageSchema,
+} from "@/lib/structured-data";
 import { VirtualDoormanDetail } from "@/components/sections/solutions/VirtualDoormanDetail";
 import { AccessControlDetail } from "@/components/sections/solutions/AccessControlDetail";
 import { MonitoringDetail } from "@/components/sections/solutions/MonitoringDetail";
-
-const iconMap: Record<string, LucideIcon> = {
-  Shield,
-  KeyRound,
-  Eye,
-  Camera,
-  ScanFace,
-  Users,
-  Bell,
-  Network,
-};
+import { FacialRecognitionDetail } from "@/components/sections/solutions/FacialRecognitionDetail";
+import { CftvDetail } from "@/components/sections/solutions/CftvDetail";
+import { VisitorManagementDetail } from "@/components/sections/solutions/VisitorManagementDetail";
+import { AlarmsDetail } from "@/components/sections/solutions/AlarmsDetail";
+import { IntegrationDetail } from "@/components/sections/solutions/IntegrationDetail";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -46,10 +36,14 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const solution = getSolutionBySlug(slug);
   if (!solution) return {};
+
+  const description = `${solution.shortDescription} Atendimento em ${localBusiness.city}, ${localBusiness.region} e Grande São Paulo. Solicite uma avaliação.`;
+
   return createMetadata({
-    title: `${solution.title} | Phoenix Security`,
-    description: solution.shortDescription,
+    title: `${solution.title} em ${localBusiness.city} e SP | Phoenix Security`,
+    description,
     path: `/solucoes/${slug}`,
+    keywords: solutionKeywords(solution.title),
   });
 }
 
@@ -58,117 +52,115 @@ export default async function SolutionPage({ params }: Props) {
   const solution = getSolutionBySlug(slug);
   if (!solution) notFound();
 
-  const Icon = iconMap[solution.icon] || Shield;
+  const path = `/solucoes/${slug}`;
+  const jsonLd = [
+    breadcrumbSchema([
+      { name: "Início", path: "/" },
+      { name: "Soluções", path: "/solucoes" },
+      { name: solution.title, path },
+    ]),
+    solutionWebPageSchema({
+      name: `${solution.title} | Phoenix Security`,
+      description: solution.description,
+      path,
+    }),
+    serviceSchema({
+      name: solution.title,
+      description: solution.description,
+      path,
+      features: solution.benefits,
+    }),
+    localBusinessSchema(),
+  ];
 
   return (
     <>
-      <PageHero
-        label={solution.title}
-        title={solution.title}
-        subtitle={solution.description}
-        breadcrumbs={[
-          { label: "Início", href: "/" },
-          { label: "Soluções", href: "/solucoes" },
-          { label: solution.title },
-        ]}
-      />
+      {jsonLd.map((schema) => (
+        <script
+          key={String(schema["@type"]) + path}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+
+      <FadeIn>
+        <section className="border-b border-white/5 pt-28 pb-10 md:pt-36 md:pb-12">
+          <Container>
+            <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-text-secondary">
+              <Link href="/" className="hover:text-white">
+                Início
+              </Link>
+              <span>/</span>
+              <Link href="/solucoes" className="hover:text-white">
+                Soluções
+              </Link>
+              <span>/</span>
+              <span className="text-white/70">{solution.title}</span>
+            </nav>
+            <p className="text-sm font-medium uppercase tracking-widest text-phoenix">
+              {solution.title}
+            </p>
+            <h1 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
+              {solution.title} para o seu empreendimento
+            </h1>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-text-secondary">
+              {solution.shortDescription} Em {localBusiness.city} e região.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <GlowButton href="/avaliacao">Solicitar uma avaliação</GlowButton>
+              <Link
+                href="/contato"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-5 py-2.5 text-sm text-white transition-colors hover:border-phoenix/40"
+              >
+                Falar com a equipe
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </Container>
+        </section>
+      </FadeIn>
 
       {slug === "portaria-virtual" && <VirtualDoormanDetail />}
       {slug === "controle-de-acesso" && <AccessControlDetail />}
       {slug === "monitoramento" && <MonitoringDetail />}
+      {slug === "reconhecimento-facial" && <FacialRecognitionDetail />}
+      {slug === "cftv-inteligente" && <CftvDetail />}
+      {slug === "gestao-de-visitantes" && <VisitorManagementDetail />}
+      {slug === "alarmes-e-sensores" && <AlarmsDetail />}
+      {slug === "integracao-de-seguranca" && <IntegrationDetail />}
 
-      <section className="py-16">
+      <section className="border-b border-white/5 bg-bg-secondary py-16 md:py-20">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div>
-              <SectionTitle
-                title="O desafio"
-                subtitle={solution.problem}
-                align="left"
-                className="mb-0"
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="flex h-32 w-32 items-center justify-center rounded-2xl bg-phoenix/10 text-phoenix">
-                <Icon className="h-16 w-16" />
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+            <FadeIn className="lg:col-span-5">
+              <p className="text-sm font-medium uppercase tracking-widest text-phoenix">
+                Por que contratar
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                Resultado claro para a operação
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-text-secondary">
+                Avaliamos o cenário do empreendimento e indicamos o desenho
+                certo. Sem complexidade desnecessária.
+              </p>
+              <div className="mt-8">
+                <GlowButton href="/avaliacao">Quero uma avaliação</GlowButton>
               </div>
-            </div>
-          </div>
-        </Container>
-      </section>
+            </FadeIn>
 
-      <section className="border-y border-white/5 bg-bg-secondary py-16">
-        <Container>
-          <SectionTitle title="Como funciona" />
-          <div className="grid gap-4 md:grid-cols-5">
-            {solution.howItWorks.map((step, index) => (
-              <div
-                key={step}
-                className="relative rounded-xl border border-white/8 bg-bg-card p-5"
-              >
-                <span className="text-2xl font-bold text-phoenix/30">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <p className="mt-2 text-sm text-white">{step}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-16">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div>
-              <SectionTitle title="Benefícios" align="left" className="mb-6" />
+            <FadeIn delay={0.08} className="lg:col-span-7">
               <ul className="space-y-3">
                 {solution.benefits.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-text-secondary">
+                  <li
+                    key={b}
+                    className="flex items-start gap-3 rounded-xl border border-white/8 bg-bg-card px-5 py-4 text-sm text-white/90"
+                  >
                     <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-phoenix" />
                     {b}
                   </li>
                 ))}
               </ul>
-            </div>
-            <div>
-              <SectionTitle title="Recursos" align="left" className="mb-6" />
-              <ul className="space-y-3">
-                {solution.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm text-text-secondary">
-                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-white/5 bg-bg-secondary py-16">
-        <Container>
-          <SectionTitle title="Cenários de uso" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {solution.useCases.map((useCase) => (
-              <div
-                key={useCase}
-                className="rounded-xl border border-white/8 bg-bg-card p-5 text-center"
-              >
-                <p className="text-sm font-medium text-white">{useCase}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-16">
-        <Container>
-          <SectionTitle title="Perguntas frequentes" />
-          <FAQAccordion items={solution.faq} />
-          <div className="mt-8 text-center">
-            <GlowButton href="/avaliacao">
-              Solicitar uma avaliação
-            </GlowButton>
+            </FadeIn>
           </div>
         </Container>
       </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -9,7 +10,6 @@ import {
   SectionHeading,
   SectionLead,
 } from "@/components/ui/SectionLabel";
-import { CinematicVisual } from "@/components/ui/CinematicVisual";
 
 const flowSteps = [
   { step: "01", title: "Detecta", desc: "Veículo ou visitante no acesso" },
@@ -20,12 +20,46 @@ const flowSteps = [
 ];
 
 export function VirtualDoormanSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.play().catch(() => {});
+  }, []);
+
   return (
     <section className="relative overflow-hidden">
-      {/* Full-width cinematic band */}
       <div className="grid lg:grid-cols-2">
-        <div className="relative min-h-[400px] lg:min-h-[600px]">
-          <CinematicVisual variant="access" overlay="right" className="absolute inset-0" />
+        <div className="relative min-h-[400px] overflow-hidden bg-bg-primary lg:min-h-[600px]">
+          <video
+            ref={videoRef}
+            className="absolute inset-0 h-full w-full scale-[1.14] object-cover object-[center_42%]"
+            src="/portaria-virtual.mp4"
+            muted
+            loop
+            playsInline
+            autoPlay
+            preload="metadata"
+            aria-hidden
+          />
+
+          {/* Soft grade + hide residual watermark edges */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-bg-primary/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/55 via-transparent to-bg-primary/30" />
+          <div className="absolute bottom-0 right-0 h-24 w-56 bg-gradient-to-tl from-bg-primary via-bg-primary/90 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-bg-primary/80 to-transparent" />
+          <div className="absolute bottom-0 left-0 h-16 w-32 bg-gradient-to-tr from-bg-primary/70 to-transparent" />
+
+          {/* Tech HUD corners */}
+          <div className="absolute left-5 top-5 h-8 w-8 border-l border-t border-phoenix/40" />
+          <div className="absolute right-5 top-5 h-8 w-8 border-r border-t border-white/20" />
+          <div className="absolute bottom-5 left-5 h-8 w-8 border-b border-l border-white/20" />
+          <div className="absolute bottom-5 right-5 h-8 w-8 border-b border-r border-phoenix/30" />
+
+          <div className="absolute left-5 top-5 mt-10 font-mono text-[10px] tracking-[0.2em] text-phoenix/70">
+            LIVE · PORTARIA
+          </div>
         </div>
 
         <div className="flex flex-col justify-center bg-bg-secondary px-6 py-20 md:px-12 lg:px-16 lg:py-28">
@@ -35,7 +69,7 @@ export function VirtualDoormanSection() {
           </SectionHeading>
           <SectionLead>
             Atendimento remoto integrado a câmeras, interfones e controle de
-            acesso — operação padronizada para condomínios em São José dos
+            acesso. Operação padronizada para condomínios em São José dos
             Campos e região.
           </SectionLead>
 
@@ -49,7 +83,6 @@ export function VirtualDoormanSection() {
         </div>
       </div>
 
-      {/* Horizontal flow — no cards */}
       <div className="border-t border-white/5 bg-bg-primary">
         <Container>
           <div className="flex flex-col divide-y divide-white/5 md:flex-row md:divide-x md:divide-y-0">

@@ -110,10 +110,10 @@ O mercado de segurança para condomínios evolui rapidamente, impulsionado por n
 
 ## Tendências em destaque
 
-1. **Portaria virtual como padrão** — cada vez mais condomínios adotam modelos remotos integrados.
-2. **Inteligência artificial no CFTV** — detecção automática de eventos relevantes.
-3. **Aplicativos para moradores** — gestão de visitantes e acessos na palma da mão.
-4. **Integração de sistemas** — ecossistemas unificados substituem soluções isoladas.
+1. **Portaria virtual como padrão**: cada vez mais condomínios adotam modelos remotos integrados.
+2. **Inteligência artificial no CFTV**: detecção automática de eventos relevantes.
+3. **Aplicativos para moradores**: gestão de visitantes e acessos na palma da mão.
+4. **Integração de sistemas**: ecossistemas unificados substituem soluções isoladas.
 
 ## O que considerar
 
@@ -131,14 +131,14 @@ Ao avaliar soluções, priorize fornecedores que ofereçam integração, suporte
     excerpt:
       "Como a digitalização está transformando a gestão de segurança em empreendimentos.",
     content: `
-A digitalização da segurança predial não é mais uma tendência futura — é uma realidade presente em empreendimentos que buscam eficiência e controle.
+A digitalização da segurança predial não é mais uma tendência futura: é uma realidade presente em empreendimentos que buscam eficiência e controle.
 
 ## Pilares da transformação
 
-- **Conectividade** — todos os dispositivos integrados em uma rede
-- **Dados** — cada acesso e evento registrado e analisável
-- **Automação** — fluxos que antes dependiam de intervenção manual
-- **Experiência** — moradores e gestores com acesso a informações em tempo real
+- **Conectividade**: todos os dispositivos integrados em uma rede
+- **Dados**: cada acesso e evento registrado e analisável
+- **Automação**: fluxos que antes dependiam de intervenção manual
+- **Experiência**: moradores e gestores com acesso a informações em tempo real
 
 ## Próximos passos
 
@@ -156,7 +156,7 @@ Empreendimentos que ainda operam com sistemas isolados têm muito a ganhar com u
     excerpt:
       "Como estruturar o fluxo de visitantes para mais segurança e menos atrito na portaria.",
     content: `
-A gestão de visitantes é um dos pontos mais críticos — e mais negligenciados — na segurança de condomínios.
+A gestão de visitantes é um dos pontos mais críticos, e mais negligenciados, na segurança de condomínios.
 
 ## Boas práticas
 

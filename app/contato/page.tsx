@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/ui/ContactForm";
 import { contactInfo } from "@/data/site";
 
 export const metadata = createMetadata({
-  title: "Contato | Phoenix Security — São José dos Campos e São Paulo",
+  title: "Contato | Phoenix Security em São José dos Campos e São Paulo",
   description:
     "Fale com a Phoenix Security em São José dos Campos. Portaria virtual, controle de acesso e monitoramento 24h para condomínios e empresas em SP.",
   path: "/contato",

@@ -1,46 +1,31 @@
 import { createMetadata } from "@/lib/seo";
-import { PageHero } from "@/components/ui/PageHero";
-import { Container } from "@/components/ui/Container";
-import { SegmentCard } from "@/components/ui/SegmentCard";
 import { CTASection } from "@/components/sections/CTASection";
-import { segments } from "@/data/segments";
+import { SegmentsIndexContent } from "@/components/sections/SegmentsIndexContent";
+import { FadeIn } from "@/components/ui/FadeIn";
+import { localBusiness } from "@/data/local-seo";
 
 export const metadata = createMetadata({
-  title: "Segmentos | Phoenix Security",
+  title: `Segmentos de Segurança em ${localBusiness.city} e SP | Phoenix Security`,
   description:
-    "Soluções de segurança inteligente adaptadas para condomínios, empresas, indústrias, loteamentos e residências.",
+    "Segurança inteligente para condomínios, empresas, indústrias, loteamentos e residências em São José dos Campos, Vale do Paraíba e Grande São Paulo.",
   path: "/segmentos",
+  keywords: [
+    "segurança para condomínios São José dos Campos",
+    "segurança empresarial Vale do Paraíba",
+    "segurança industrial SP",
+    "segurança loteamentos Grande SP",
+    "segurança residencial SJC",
+    "Phoenix Security segmentos",
+  ],
 });
 
 export default function SegmentosPage() {
   return (
     <>
-      <PageHero
-        label="Segmentos"
-        title="Soluções para cada tipo de empreendimento."
-        subtitle="Adaptamos nossa tecnologia à realidade de cada segmento, com soluções personalizadas e suporte especializado."
-        breadcrumbs={[
-          { label: "Início", href: "/" },
-          { label: "Segmentos" },
-        ]}
-      />
-      <section className="pb-20">
-        <Container>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {segments.map((segment, index) => (
-              <SegmentCard
-                key={segment.slug}
-                slug={segment.slug}
-                title={segment.title}
-                description={segment.shortDescription}
-                icon={segment.icon}
-                index={index}
-              />
-            ))}
-          </div>
-        </Container>
-      </section>
-      <CTASection />
+      <SegmentsIndexContent />
+      <FadeIn>
+        <CTASection />
+      </FadeIn>
     </>
   );
 }

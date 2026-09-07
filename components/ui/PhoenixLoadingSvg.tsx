@@ -8,7 +8,7 @@ type PhoenixLoadingSvgProps = {
 };
 
 /**
- * SVG vetorial animado para o loading — chamas em espiral com desenho progressivo.
+ * SVG vetorial animado para o loading: chamas em espiral com desenho progressivo.
  */
 export function PhoenixLoadingSvg({
   className,
@@ -67,7 +67,7 @@ export function PhoenixLoadingSvg({
         className="phoenix-loader-orbit"
       />
 
-      {/* Flame petals — spiral phoenix */}
+      {/* Flame petals: spiral phoenix */}
       <g className="phoenix-loader-wings" filter="url(#pl-glow)">
         <path
           className="phoenix-loader-petal phoenix-loader-petal-1"

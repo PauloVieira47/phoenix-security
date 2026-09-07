@@ -127,18 +127,24 @@ export function Footer() {
           <p className="text-sm text-text-secondary">
             © {currentYear} Phoenix Security. Todos os direitos reservados.
           </p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             <Link
               href="/politica-de-privacidade"
               className="text-sm text-text-secondary transition-colors hover:text-white"
             >
-              Política de Privacidade
+              Privacidade
+            </Link>
+            <Link
+              href="/politica-de-cookies"
+              className="text-sm text-text-secondary transition-colors hover:text-white"
+            >
+              Cookies
             </Link>
             <Link
               href="/termos-de-uso"
               className="text-sm text-text-secondary transition-colors hover:text-white"
             >
-              Termos de Uso
+              Termos
             </Link>
           </div>
         </div>

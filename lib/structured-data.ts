@@ -79,7 +79,7 @@ export function localBusinessSchema() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${siteConfig.url}/#localbusiness`,
-    name: `${siteConfig.name} — ${localBusiness.city}`,
+    name: `${siteConfig.name}, ${localBusiness.city}`,
     image: `${siteConfig.url}/og-image.jpg`,
     url: siteConfig.url,
     telephone: contactInfo.phone,
@@ -97,7 +97,9 @@ export function localBusinessSchema() {
       latitude: localBusiness.geo.latitude,
       longitude: localBusiness.geo.longitude,
     },
+    hasMap: localBusiness.googleMapsUrl,
     areaServed: localBusiness.serviceArea,
+    sameAs: [contactInfo.instagram].filter(Boolean),
   };
 }
 
@@ -117,3 +119,98 @@ export function faqSchema(
     })),
   };
 }
+
+export function breadcrumbSchema(
+  items: { name: string; path: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${siteConfig.url}${item.path}`,
+    })),
+  };
+}
+
+export function serviceSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  features?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteConfig.url}${input.path}#service`,
+    name: input.name,
+    description: input.description,
+    url: `${siteConfig.url}${input.path}`,
+    serviceType: input.name,
+    provider: { "@id": `${siteConfig.url}/#organization` },
+    areaServed: localBusiness.serviceArea.map((city) => ({
+      "@type": "City",
+      name: city,
+    })),
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: `${siteConfig.url}/avaliacao`,
+      servicePhone: contactInfo.phone,
+    },
+    ...(input.features?.length
+      ? {
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: `Recursos de ${input.name}`,
+            itemListElement: input.features.map((feature) => ({
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: feature,
+              },
+            })),
+          },
+        }
+      : {}),
+  };
+}
+
+export function solutionWebPageSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteConfig.url}${input.path}#webpage`,
+    url: `${siteConfig.url}${input.path}`,
+    name: input.name,
+    description: input.description,
+    isPartOf: { "@id": `${siteConfig.url}/#website` },
+    about: { "@id": `${siteConfig.url}/#organization` },
+    inLanguage: "pt-BR",
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: `${siteConfig.url}${siteConfig.ogImage}`,
+    },
+  };
+}
+
+export function solutionKeywords(solutionTitle: string): string[] {
+  const base = solutionTitle.toLowerCase();
+  return [
+    `${solutionTitle} São José dos Campos`,
+    `${solutionTitle} Vale do Paraíba`,
+    `${solutionTitle} São Paulo`,
+    `${solutionTitle} Grande SP`,
+    `${base} condomínio`,
+    `${base} empresa`,
+    `${base} SJC`,
+    `segurança ${base} SP`,
+    `Phoenix Security ${solutionTitle}`,
+  ];
+}
+

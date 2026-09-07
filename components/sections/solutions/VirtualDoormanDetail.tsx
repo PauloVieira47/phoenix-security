@@ -1,78 +1,79 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   User,
   Users,
   Wrench,
   Package,
   Car,
+  Video,
+  Shield,
+  Bell,
 } from "lucide-react";
-import { Container } from "@/components/ui/Container";
-import { SectionTitle } from "@/components/ui/SectionTitle";
+import { SolutionTechShell } from "@/components/sections/solutions/SolutionTechShell";
 
-const journeys = [
+const items = [
+  { icon: User, label: "Morador" },
+  { icon: Users, label: "Visitante" },
+  { icon: Wrench, label: "Prestador" },
+  { icon: Car, label: "Veículo" },
+];
+
+const features = [
   {
-    icon: User,
-    title: "Morador",
-    steps: ["Identificação automática", "Acesso liberado", "Registro no sistema"],
+    icon: Video,
+    title: "Atendimento remoto",
+    description: "Operadores acompanham o acesso em tempo real, 24 horas.",
   },
   {
     icon: Users,
-    title: "Visitante",
-    steps: ["Chegada ao acesso", "Validação com morador", "Liberação e registro"],
-  },
-  {
-    icon: Wrench,
-    title: "Prestador",
-    steps: ["Cadastro prévio", "Identificação na entrada", "Acesso autorizado"],
+    title: "Visitantes validados",
+    description: "Identificação, confirmação com morador e liberação registrada.",
   },
   {
     icon: Package,
-    title: "Entrega",
-    steps: ["Notificação ao morador", "Registro da entrega", "Liberação controlada"],
+    title: "Entregas controladas",
+    description: "Notificação ao morador e registro completo da entrega.",
   },
   {
     icon: Car,
-    title: "Veículo",
-    steps: ["Detecção na entrada", "Identificação da placa", "Liberação do portão"],
+    title: "Acesso veicular",
+    description: "Detecção na entrada, validação e liberação do portão.",
   },
+  {
+    icon: Shield,
+    title: "Registro e auditoria",
+    description: "Histórico consultável de cada evento no empreendimento.",
+  },
+  {
+    icon: Bell,
+    title: "Alertas automáticos",
+    description: "Notificações para síndicos, moradores e operação.",
+  },
+];
+
+const statusItems = [
+  { label: "GATE", value: "ONLINE" },
+  { label: "OPS", value: "24H" },
+  { label: "VIDEO", value: "LIVE" },
+  { label: "LOG", value: "SYNC" },
 ];
 
 export function VirtualDoormanDetail() {
   return (
-    <section className="border-b border-white/5 bg-bg-secondary py-16">
-      <Container>
-        <SectionTitle
-          title="Como funciona na prática"
-          subtitle="Jornadas de acesso para cada perfil de usuário do empreendimento."
-        />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {journeys.map((journey, index) => (
-            <motion.div
-              key={journey.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="rounded-2xl border border-white/8 bg-bg-card p-6"
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-phoenix/10 text-phoenix">
-                <journey.icon className="h-6 w-6" />
-              </div>
-              <h3 className="text-lg font-semibold text-white">{journey.title}</h3>
-              <ol className="mt-4 space-y-2">
-                {journey.steps.map((step, i) => (
-                  <li key={step} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <span className="font-mono text-xs text-phoenix">{i + 1}.</span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-    </section>
+    <SolutionTechShell
+      backgroundSrc="/background-controle-acesso.jpg"
+      objectPosition="object-[65%_center]"
+      eyebrow="Portaria remota"
+      title="Portaria sempre ativa."
+      titleMuted="Sem perder o controle."
+      description="Atendimento remoto, identificação de visitantes, liberação de acessos e registro completo de eventos para condomínios e empreendimentos."
+      items={items}
+      statusItems={statusItems}
+      featuresEyebrow="Jornadas"
+      featuresTitle="Como funciona na prática."
+      featuresDescription="Fluxos claros para morador, visitante, prestador, entrega e veículo, com rastreabilidade total."
+      features={features}
+    />
   );
 }

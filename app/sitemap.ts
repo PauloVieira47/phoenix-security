@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/avaliacao",
     "/faq",
     "/politica-de-privacidade",
+    "/politica-de-cookies",
     "/termos-de-uso",
   ].map((path) => ({
     url: `${baseUrl}${path}`,
@@ -29,15 +30,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const solutionPages = solutions.map((s) => ({
     url: `${baseUrl}/solucoes/${s.slug}`,
     lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
   }));
 
   const segmentPages = segments.map((s) => ({
     url: `${baseUrl}/segmentos/${s.slug}`,
     lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
+    changeFrequency: "weekly" as const,
+    priority: 0.85,
   }));
 
   const blogPages = blogPosts.map((p) => ({

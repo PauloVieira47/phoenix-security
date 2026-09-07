@@ -39,6 +39,12 @@ body {
   outline-offset: 2px;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(240, 90, 36, 0.45);
+}
+
 .grid-bg {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),

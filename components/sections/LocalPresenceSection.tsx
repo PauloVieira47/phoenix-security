@@ -42,7 +42,7 @@ export function LocalPresenceSection() {
             <SectionLead>
               A Phoenix Security atende condomínios, empresas e empreendimentos
               em {localBusiness.city}, na Grande São Paulo e em todo o estado de
-              São Paulo — com portaria virtual, CFTV, controle de acesso e
+              São Paulo, com portaria virtual, CFTV, controle de acesso e
               central de monitoramento 24 horas.
             </SectionLead>
             <p className="mt-6 text-sm text-text-secondary">

@@ -5,11 +5,14 @@ export const localBusiness = {
   region: "Vale do Paraíba Paulista",
   country: "Brasil",
   postalCode: "12200-000",
-  streetAddress: "São José dos Campos — SP",
+  streetAddress: "São José dos Campos, SP",
   geo: {
     latitude: -23.1896,
     longitude: -45.8841,
   },
+  mapEmbedQuery: "São José dos Campos, SP, Brasil",
+  googleMapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=São+José+dos+Campos,+SP",
   serviceArea: [
     "São José dos Campos",
     "São Paulo",

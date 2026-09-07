@@ -16,7 +16,7 @@ const bentoLayout = [
   { slug: "controle-de-acesso", span: "" },
   { slug: "monitoramento", span: "" },
   { slug: "cftv-inteligente", span: "" },
-  { slug: "reconhecimento-facial", span: "md:col-span-2" },
+  { slug: "reconhecimento-facial", span: "" },
   { slug: "gestao-de-visitantes", span: "" },
   { slug: "alarmes-e-sensores", span: "" },
   { slug: "integracao-de-seguranca", span: "md:col-span-2" },
@@ -38,7 +38,7 @@ export function SolutionsSection() {
           <SectionHeading>Um ecossistema completo de segurança.</SectionHeading>
           <SectionLead>
             Tecnologias integradas para proteger, monitorar e gerenciar cada
-            acesso — de São José dos Campos à capital paulista.
+            acesso, de São José dos Campos à capital paulista.
           </SectionLead>
         </div>
 

@@ -3,7 +3,7 @@ export const metrics = [
     value: 100,
     prefix: "+",
     suffix: "",
-    label: "Condomínios protegidos",
+    label: "Empreendimentos atendidos",
   },
   {
     value: "24/7",

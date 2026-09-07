@@ -36,7 +36,9 @@ export function AnimatedCounter({
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = start + (end - start) * eased;
-      setDisplay(current.toFixed(decimals));
+      setDisplay(
+        current.toFixed(decimals).replace(".", ","),
+      );
 
       if (progress < 1) {
         requestAnimationFrame(animate);

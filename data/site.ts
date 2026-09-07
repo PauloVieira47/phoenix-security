@@ -4,15 +4,19 @@ export const socialLinks = {
 };
 
 export const contactInfo = {
-  phone: "(12) 0000-0000",
-  whatsapp: "(12) 00000-0000",
-  whatsappLink: "https://wa.me/5512000000000",
+  phone: "(11) 95351-0681",
+  whatsapp: "(11) 95351-0681",
+  whatsappLink:
+    "https://wa.me/5511953510681?text=" +
+    encodeURIComponent(
+      "Olá! Gostaria de saber mais sobre as soluções da Phoenix Security.",
+    ),
   email: "contato@phoenixsecurity.com.br",
   instagram: socialLinks.instagram,
   instagramHandle: socialLinks.instagramHandle,
   linkedin: "",
-  address: "São José dos Campos — SP",
-  addressFull: "São José dos Campos, São Paulo — Brasil",
+  address: "São José dos Campos, SP",
+  addressFull: "São José dos Campos, São Paulo, Brasil",
 };
 
 export const companyProfile = {
@@ -40,6 +44,8 @@ export const footerLinks = {
     { label: "CFTV Inteligente", href: "/solucoes/cftv-inteligente" },
     { label: "Reconhecimento Facial", href: "/solucoes/reconhecimento-facial" },
     { label: "Gestão de Visitantes", href: "/solucoes/gestao-de-visitantes" },
+    { label: "Alarmes e Sensores", href: "/solucoes/alarmes-e-sensores" },
+    { label: "Integração de Segurança", href: "/solucoes/integracao-de-seguranca" },
   ],
   empresa: [
     { label: "Sobre nós", href: "/sobre" },
@@ -53,6 +59,7 @@ export const footerLinks = {
     { label: "Solicitar avaliação", href: "/avaliacao" },
     { label: "Instagram", href: socialLinks.instagram },
     { label: "Política de Privacidade", href: "/politica-de-privacidade" },
+    { label: "Política de Cookies", href: "/politica-de-cookies" },
     { label: "Termos de Uso", href: "/termos-de-uso" },
   ],
 };
