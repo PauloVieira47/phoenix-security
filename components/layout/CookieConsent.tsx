@@ -3,21 +3,18 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PhoenixLogo } from "@/components/ui/PhoenixLogo";
-
-const STORAGE_KEY = "phoenix_cookie_consent";
-
-type ConsentState = {
-  necessary: true;
-  analytics: boolean;
-  decidedAt: string;
-};
+import {
+  COOKIE_CONSENT_KEY,
+  notifyCookieConsentChange,
+  type CookieConsentState,
+} from "@/lib/cookie-consent";
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
       if (!raw) setVisible(true);
     } catch {
       setVisible(true);
@@ -25,16 +22,17 @@ export function CookieConsent() {
   }, []);
 
   function save(analytics: boolean) {
-    const payload: ConsentState = {
+    const payload: CookieConsentState = {
       necessary: true,
       analytics,
       decidedAt: new Date().toISOString(),
     };
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
     } catch {
       /* ignore */
     }
+    notifyCookieConsentChange();
     setVisible(false);
   }
 

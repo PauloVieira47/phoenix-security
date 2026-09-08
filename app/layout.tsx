@@ -6,6 +6,7 @@ import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { MobileConversionBar } from "@/components/layout/MobileConversionBar";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { LoadingGate } from "@/components/layout/PhoenixLoader";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
 import { siteConfig, createMetadata, rootMetadataExtras } from "@/lib/seo";
@@ -85,6 +86,7 @@ export default async function RootLayout({
           </LoadingGate>
         )}
         <VercelAnalytics />
+        {!comingSoon && <GoogleAnalytics />}
       </body>
     </html>
   );
