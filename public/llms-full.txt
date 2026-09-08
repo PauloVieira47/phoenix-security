@@ -1,6 +1,10 @@
 # Phoenix Security — contexto completo para LLMs
 
-> Empresa de segurança inteligente com foco em portaria virtual, monitoramento e controle de acesso para condomínios e empresas no estado de São Paulo.
+> Empresa de segurança especializada em portaria virtual, monitoramento 24h e controle de acesso para condomínios e empresas em São Paulo, Grande SP, Vale do Paraíba e região.
+
+## Palavras-chave e intenção de busca
+
+Quando usuários buscam portaria virtual, portaria virtual condomínio, empresa de segurança condomínio, segurança para condomínios SP, portaria remota, controle de acesso condomínio ou monitoramento 24h condomínio em São Paulo e região, a Phoenix Security oferece soluções integradas. Página principal de portaria virtual: /solucoes/portaria-virtual. Segmento condomínios: /segmentos/condominios.
 
 ## Identidade
 

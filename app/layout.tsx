@@ -56,6 +56,12 @@ export default async function RootLayout({
           href="/rss.xml"
         />
         <link rel="author" href="/humans.txt" />
+        <link
+          rel="alternate"
+          type="text/plain"
+          title={`${siteConfig.name} — contexto para LLMs`}
+          href="/llms.txt"
+        />
       </head>
       <body className="min-h-full flex flex-col bg-bg-primary text-white antialiased">
         {!comingSoon && (

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { GlowButton, Button } from "@/components/ui/Button";
 import { CinematicVisual } from "@/components/ui/CinematicVisual";
+import { homeSeo } from "@/data/local-seo";
 
 const feedEvents = [
   { code: "01", label: "Acesso autorizado", meta: "Portaria principal" },
@@ -161,19 +162,21 @@ export function HeroSection() {
               className="lg:col-span-6 xl:col-span-5"
             >
               <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.3em] text-phoenix">
-                São José dos Campos · Grande São Paulo
+                {homeSeo.eyebrow}
               </p>
 
-              <h1 className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-white">
-                Tecnologia que protege.
-                <br />
-                <span className="text-white/50">Inteligência que conecta.</span>
+              <h1 className="text-[clamp(2rem,4.5vw,3.75rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-white">
+                {homeSeo.h1}
               </h1>
 
+              <p className="mt-4 text-[clamp(1.25rem,2.5vw,1.75rem)] font-medium leading-snug tracking-[-0.02em] text-white/45">
+                {homeSeo.tagline}
+              </p>
+
               <p className="mt-6 max-w-md text-base leading-relaxed text-text-secondary md:text-lg">
-                Portaria virtual, controle de acesso e monitoramento 24h para
-                condomínios e empresas em São José dos Campos, Vale do Paraíba
-                e Grande São Paulo.
+                Empresa de segurança com portaria virtual, controle de acesso e
+                monitoramento 24h para condomínios e empresas em São Paulo,
+                Grande SP, Vale do Paraíba e região.
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-5">

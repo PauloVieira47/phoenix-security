@@ -238,13 +238,14 @@ export function solutionWebPageSchema(input: {
 export function solutionKeywords(solutionTitle: string): string[] {
   const base = solutionTitle.toLowerCase();
   return [
-    `${solutionTitle} São José dos Campos`,
-    `${solutionTitle} Vale do Paraíba`,
     `${solutionTitle} São Paulo`,
+    `${solutionTitle} condomínio`,
     `${solutionTitle} Grande SP`,
-    `${base} condomínio`,
+    `${solutionTitle} Vale do Paraíba`,
+    `${solutionTitle} São José dos Campos`,
+    `${base} condomínio SP`,
     `${base} empresa`,
-    `${base} SJC`,
+    `empresa de segurança ${base}`,
     `segurança ${base} SP`,
     `Phoenix Security ${solutionTitle}`,
   ];

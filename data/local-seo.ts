@@ -52,24 +52,32 @@ export const localBusiness = {
 };
 
 export const homeKeywords = [
-  "segurança inteligente São José dos Campos",
-  "portaria virtual São José dos Campos",
+  "portaria virtual São Paulo",
+  "portaria virtual condomínio",
+  "empresa de segurança condomínio",
+  "empresa de segurança São Paulo",
+  "segurança para condomínios SP",
+  "portaria remota condomínio",
   "controle de acesso condomínio SP",
-  "monitoramento 24h São Paulo",
-  "CFTV inteligente Vale do Paraíba",
-  "reconhecimento facial condomínio SP",
-  "segurança para condomínios São Paulo",
-  "portaria remota Grande SP",
-  "empresa de segurança São José dos Campos",
-  "segurança predial SP",
+  "monitoramento 24h condomínio",
+  "CFTV condomínio São Paulo",
+  "reconhecimento facial condomínio",
+  "segurança predial condomínio",
+  "portaria virtual Grande SP",
+  "portaria virtual Vale do Paraíba",
+  "portaria virtual São José dos Campos",
+  "empresa de segurança eletrônica SP",
   "gestão de visitantes condomínio",
-  "integração de segurança empresarial SP",
+  "integração de segurança empresarial",
+  "Phoenix Security",
 ];
 
 export const homeSeo = {
   title:
-    "Phoenix Security | Segurança Inteligente em São José dos Campos e São Paulo",
+    "Portaria Virtual e Segurança para Condomínios em São Paulo | Phoenix Security",
   description:
-    "Portaria virtual, controle de acesso, monitoramento 24h e CFTV inteligente para condomínios e empresas em São José dos Campos, Vale do Paraíba e Grande São Paulo. Solicite uma avaliação.",
-  h1: "Segurança inteligente para condomínios e empresas em São Paulo",
+    "Empresa de segurança especializada em portaria virtual, controle de acesso, monitoramento 24h e CFTV para condomínios e empresas em São Paulo, Grande SP, Vale do Paraíba e SJC. Avaliação gratuita.",
+  h1: "Portaria virtual e segurança para condomínios em São Paulo",
+  tagline: "Tecnologia que protege. Inteligência que conecta.",
+  eyebrow: "São Paulo · Penha · Grande SP · Vale do Paraíba",
 };
