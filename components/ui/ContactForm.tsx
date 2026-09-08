@@ -4,6 +4,8 @@ import { useState } from "react";
 import { GlowButton } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { trackFormSubmit } from "@/components/analytics/track";
+import { buildWhatsAppUrl, openWhatsApp } from "@/lib/whatsapp";
+import { contactInfo } from "@/data/site";
 
 type FormData = {
   nome: string;
@@ -58,6 +60,7 @@ export function ContactForm() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -79,6 +82,26 @@ export function ContactForm() {
         tipo: form.tipo || "nao_informado",
         solucao: form.solucao || "nao_informado",
       });
+
+      const message = [
+        "Olá! Enviei o formulário de contato pelo site.",
+        "",
+        `Nome: ${form.nome.trim()}`,
+        form.empresa.trim() ? `Empresa: ${form.empresa.trim()}` : "",
+        `E-mail: ${form.email.trim()}`,
+        `WhatsApp: ${form.whatsapp.trim()}`,
+        form.cidade.trim() ? `Cidade: ${form.cidade.trim()}${form.estado ? `/${form.estado}` : ""}` : "",
+        `Tipo: ${form.tipo}`,
+        form.unidades.trim() ? `Unidades: ${form.unidades.trim()}` : "",
+        form.solucao ? `Interesse: ${form.solucao}` : "",
+        form.mensagem.trim() ? `Mensagem: ${form.mensagem.trim()}` : "",
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      const url = buildWhatsAppUrl(message);
+      setWhatsappUrl(url);
+      openWhatsApp(message);
       setSubmitted(true);
     }
   };
@@ -91,12 +114,21 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
-        <h3 className="text-xl font-semibold text-white">
-          Solicitação enviada com sucesso!
-        </h3>
+        <h3 className="text-xl font-semibold text-white">Quase lá!</h3>
         <p className="mt-2 text-text-secondary">
-          Nossa equipe entrará em contato em até 24 horas úteis.
+          Abrimos o WhatsApp com seus dados. Nossa equipe retorna em breve.
         </p>
+        {whatsappUrl && (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white hover:bg-[#2fe06f]"
+          >
+            Abrir WhatsApp de novo
+          </a>
+        )}
+        <p className="mt-4 text-xs text-white/40">Ou ligue: {contactInfo.phone}</p>
       </div>
     );
   }

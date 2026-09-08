@@ -1,11 +1,11 @@
 import { Inter } from "next/font/google";
 import { headers } from "next/headers";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { MobileConversionBar } from "@/components/layout/MobileConversionBar";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
 import { LoadingGate } from "@/components/layout/PhoenixLoader";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
 import { siteConfig, createMetadata, rootMetadataExtras } from "@/lib/seo";
@@ -71,14 +71,14 @@ export default async function RootLayout({
         ) : (
           <LoadingGate>
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-[4.5rem] md:pb-0">{children}</main>
             <Footer />
+            <MobileConversionBar />
             <WhatsAppButton />
             <CookieConsent />
           </LoadingGate>
         )}
-        <Analytics />
-        <SpeedInsights />
+        <VercelAnalytics />
       </body>
     </html>
   );

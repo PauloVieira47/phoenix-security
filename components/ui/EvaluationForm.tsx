@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import { PhoenixLogo } from "@/components/ui/PhoenixLogo";
 import { GlowButton } from "@/components/ui/Button";
 import { trackFormSubmit } from "@/components/analytics/track";
+import { buildWhatsAppUrl, openWhatsApp } from "@/lib/whatsapp";
+import { contactInfo } from "@/data/site";
 
 const tipos = [
   "Condomínio",
@@ -95,6 +97,7 @@ export function EvaluationForm() {
   });
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -129,10 +132,26 @@ export function EvaluationForm() {
       return;
     }
 
+    const tipoLabel =
+      form.tipo === "Outro" ? form.tipoOutro.trim() || "Outro" : form.tipo;
+
     trackFormSubmit("avaliacao", {
-      tipo: form.tipo === "Outro" ? form.tipoOutro.trim() || "Outro" : form.tipo,
+      tipo: tipoLabel,
       interesse: form.interesse,
     });
+
+    const message = [
+      "Olá! Quero solicitar uma avaliação.",
+      "",
+      `Nome: ${form.nome.trim()}`,
+      `Telefone: ${form.telefone.trim()}`,
+      `Empreendimento: ${tipoLabel}`,
+      `Interesse: ${form.interesse}`,
+    ].join("\n");
+
+    const url = buildWhatsAppUrl(message);
+    setWhatsappUrl(url);
+    openWhatsApp(message);
     setSubmitted(true);
   }
 
@@ -142,9 +161,22 @@ export function EvaluationForm() {
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/15">
           <Check className="h-6 w-6 text-emerald-400" />
         </div>
-        <h3 className="text-lg font-semibold text-white">Solicitação enviada</h3>
+        <h3 className="text-lg font-semibold text-white">Quase lá!</h3>
         <p className="mt-2 text-sm text-text-secondary">
-          Recebemos seus dados. Nossa equipe entra em contato em breve.
+          Abrimos o WhatsApp com seus dados. Nossa equipe retorna em breve.
+        </p>
+        {whatsappUrl && (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white hover:bg-[#2fe06f]"
+          >
+            Abrir WhatsApp de novo
+          </a>
+        )}
+        <p className="mt-4 text-xs text-white/40">
+          Ou ligue: {contactInfo.phone}
         </p>
       </div>
     );

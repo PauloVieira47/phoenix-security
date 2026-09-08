@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { GlowButton } from "@/components/ui/Button";
 import { CinematicVisual } from "@/components/ui/CinematicVisual";
+import { contactInfo } from "@/data/site";
+import { TrackedWhatsAppLink } from "@/components/analytics/TrackedWhatsAppLink";
+import { trackCtaClick } from "@/components/analytics/track";
 
 type CTASectionProps = {
   title?: string;
@@ -13,8 +16,8 @@ type CTASectionProps = {
 
 export function CTASection({
   title = "Sua segurança pode ser mais inteligente.",
-  description = "Descubra como a Phoenix pode transformar o controle e a segurança do seu empreendimento em São Paulo.",
-  buttonText = "Solicitar uma avaliação",
+  description = "Avaliação gratuita para condomínios e empresas em São Paulo e região.",
+  buttonText = "Solicitar avaliação grátis",
   buttonHref = "/avaliacao",
 }: CTASectionProps) {
   return (
@@ -38,10 +41,23 @@ export function CTASection({
             <p className="mt-5 text-base leading-relaxed text-text-secondary md:text-lg">
               {description}
             </p>
-            <div className="mt-10">
-              <GlowButton href={buttonHref} size="lg">
+            <div className="mt-10 flex flex-wrap gap-3">
+              <GlowButton
+                href={buttonHref}
+                size="lg"
+                onClick={() => trackCtaClick("cta_section", buttonText)}
+              >
                 {buttonText}
               </GlowButton>
+              <TrackedWhatsAppLink
+                href={contactInfo.whatsappLink}
+                location="cta"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg border border-white/15 px-6 py-4 text-sm font-medium text-white transition-colors hover:border-[#25D366]/50 hover:text-[#25D366]"
+              >
+                Falar no WhatsApp
+              </TrackedWhatsAppLink>
             </div>
           </motion.div>
         </div>

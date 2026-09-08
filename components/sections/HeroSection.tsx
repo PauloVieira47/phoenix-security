@@ -177,7 +177,7 @@ export function HeroSection() {
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-5">
-                <GlowButton href="/avaliacao">Solicitar avaliação</GlowButton>
+                <GlowButton href="/avaliacao">Solicitar avaliação grátis</GlowButton>
                 <Button href="/solucoes" variant="ghost" className="group px-0">
                   Conhecer soluções
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

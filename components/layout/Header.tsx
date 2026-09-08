@@ -79,7 +79,7 @@ export function Header() {
 
         <div className="hidden lg:block">
           <GlowButton href="/avaliacao" size="sm">
-            Solicitar uma avaliação
+            Avaliação grátis
           </GlowButton>
         </div>
 
