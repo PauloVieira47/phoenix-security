@@ -3,7 +3,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { trackWhatsAppClick } from "@/components/analytics/track";
 
-type Location = "floating" | "footer" | "contato" | "404" | "other";
+type Location = "floating" | "footer" | "contato" | "404" | "cta" | "other";
 
 type Props = Omit<ComponentPropsWithoutRef<"a">, "onClick"> & {
   location: Location;
