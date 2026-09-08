@@ -5,7 +5,6 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { MobileConversionBar } from "@/components/layout/MobileConversionBar";
 import { CookieConsent } from "@/components/layout/CookieConsent";
-import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { LoadingGate } from "@/components/layout/PhoenixLoader";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
@@ -85,7 +84,6 @@ export default async function RootLayout({
             <CookieConsent />
           </LoadingGate>
         )}
-        <VercelAnalytics />
         {!comingSoon && <GoogleAnalytics />}
       </body>
     </html>

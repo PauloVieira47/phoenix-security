@@ -1,19 +1,17 @@
-import { track } from "@vercel/analytics";
+import { hasAnalyticsConsent } from "@/lib/cookie-consent";
+import { sendGtagEvent } from "@/lib/gtag";
 
 type EventProps = Record<string, string | number | boolean | null>;
 
 const isDev = process.env.NODE_ENV === "development";
 
 export function trackEvent(name: string, props?: EventProps) {
-  try {
-    track(name, props);
-    if (isDev) {
-      console.info("[Phoenix Analytics]", name, props ?? {});
-    }
-  } catch {
-    if (isDev) {
-      console.info("[Phoenix Analytics]", name, props ?? {});
-    }
+  if (!hasAnalyticsConsent()) return;
+
+  sendGtagEvent(name, props);
+
+  if (isDev) {
+    console.info("[Google Analytics]", name, props ?? {});
   }
 }
 
@@ -25,7 +23,14 @@ export function trackFormSubmit(
 }
 
 export function trackWhatsAppClick(
-  location: "floating" | "footer" | "contato" | "404" | "mobile_bar" | "cta" | "other",
+  location:
+    | "floating"
+    | "footer"
+    | "contato"
+    | "404"
+    | "mobile_bar"
+    | "cta"
+    | "other",
 ) {
   trackEvent("whatsapp_click", { location });
 }
