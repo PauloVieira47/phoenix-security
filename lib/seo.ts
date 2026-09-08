@@ -3,7 +3,7 @@ import { localBusiness } from "@/data/local-seo";
 import { contactInfo } from "@/data/site";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://phoenixsecurity.com.br";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://phoenixsecuritybr.com.br";
 
 export const siteConfig = {
   name: "Phoenix Security",

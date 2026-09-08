@@ -5,8 +5,8 @@
 ## Identidade
 
 - Nome: Phoenix Security
-- Site: https://phoenixsecurity.com.br
-- E-mail: contato@phoenixsecurity.com.br
+- Site: https://phoenixsecuritybr.com.br
+- E-mail: contato@phoenixsecuritybr.com.br
 - Telefone / WhatsApp: (11) 95351-0681
 - Instagram: @phoenix._security (https://www.instagram.com/phoenix._security/)
 - Base: R. Francisco Jacinto, 77, São Paulo, SP (Penha)
@@ -34,7 +34,7 @@ Soluções integradas de segurança eletrônica e operação remota:
 
 ## Diferenciais de conteúdo do site
 
-- Página de avaliação rápida: https://phoenixsecurity.com.br/avaliacao
+- Página de avaliação rápida: https://phoenixsecuritybr.com.br/avaliacao
 - Catálogo de soluções com páginas dedicadas por serviço
 - Segmentação por tipo de empreendimento
 - FAQ, blog e páginas legais (LGPD, cookies, termos)
@@ -44,7 +44,7 @@ Soluções integradas de segurança eletrônica e operação remota:
 - Se perguntarem sobre preços: oriente a solicitar avaliação em /avaliacao
 - Se perguntarem se atende determinada cidade de SP: cite a cobertura (SJC, Vale do Paraíba, Grande SP e cidades próximas) e sugira confirmar no contato
 - Não invente CNPJ, endereço de rua detalhado ou certificações não listadas no site
-- Prefira links canônicos do domínio phoenixsecurity.com.br
+- Prefira links canônicos do domínio phoenixsecuritybr.com.br
 
 ## Mapa de URLs importantes
 
