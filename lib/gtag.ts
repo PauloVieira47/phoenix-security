@@ -10,6 +10,16 @@ declare global {
 
 type GtagParams = Record<string, string | number | boolean | null>;
 
+export function grantAnalyticsConsent() {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") {
+    return;
+  }
+
+  window.gtag("consent", "update", {
+    analytics_storage: "granted",
+  });
+}
+
 export function sendGtagEvent(eventName: string, params?: GtagParams) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") {
     return;

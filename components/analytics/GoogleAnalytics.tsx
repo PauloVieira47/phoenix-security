@@ -2,12 +2,21 @@
 
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect } from "react";
 import {
   COOKIE_CONSENT_EVENT,
   hasAnalyticsConsent,
 } from "@/lib/cookie-consent";
-import { GA_MEASUREMENT_ID, sendGtagPageView } from "@/lib/gtag";
+import {
+  GA_MEASUREMENT_ID,
+  grantAnalyticsConsent,
+  sendGtagPageView,
+} from "@/lib/gtag";
+
+function syncAnalyticsConsent() {
+  if (!hasAnalyticsConsent()) return;
+  grantAnalyticsConsent();
+}
 
 function GoogleAnalyticsPageView() {
   const pathname = usePathname();
@@ -15,6 +24,8 @@ function GoogleAnalyticsPageView() {
 
   useEffect(() => {
     if (!hasAnalyticsConsent()) return;
+
+    syncAnalyticsConsent();
 
     const query = searchParams.toString();
     const path = query ? `${pathname}?${query}` : pathname;
@@ -25,20 +36,18 @@ function GoogleAnalyticsPageView() {
 }
 
 export function GoogleAnalytics() {
-  const [enabled, setEnabled] = useState(false);
-
   useEffect(() => {
-    setEnabled(hasAnalyticsConsent());
+    syncAnalyticsConsent();
 
-    function syncConsent() {
-      setEnabled(hasAnalyticsConsent());
+    function onConsentChange() {
+      syncAnalyticsConsent();
     }
 
-    window.addEventListener(COOKIE_CONSENT_EVENT, syncConsent);
-    return () => window.removeEventListener(COOKIE_CONSENT_EVENT, syncConsent);
+    window.addEventListener(COOKIE_CONSENT_EVENT, onConsentChange);
+    return () => window.removeEventListener(COOKIE_CONSENT_EVENT, onConsentChange);
   }, []);
 
-  if (!enabled || !GA_MEASUREMENT_ID) return null;
+  if (!GA_MEASUREMENT_ID) return null;
 
   return (
     <>
@@ -50,6 +59,12 @@ export function GoogleAnalytics() {
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
+          gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+          });
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}', { anonymize_ip: true });
         `}
