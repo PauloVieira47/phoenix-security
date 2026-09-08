@@ -14,7 +14,6 @@ import { EcosystemSection } from "@/components/sections/EcosystemSection";
 import { SecurityPeopleSection } from "@/components/sections/SecurityPeopleSection";
 import { SegmentsSection } from "@/components/sections/SegmentsSection";
 import { WhyPhoenixSection } from "@/components/sections/WhyPhoenixSection";
-import { ProcessSection } from "@/components/sections/ProcessSection";
 import { LocalPresenceSection } from "@/components/sections/LocalPresenceSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { CTASection } from "@/components/sections/CTASection";
@@ -49,7 +48,6 @@ export default function HomePage() {
       <SecurityPeopleSection />
       <SegmentsSection />
       <WhyPhoenixSection />
-      <ProcessSection />
       <LocalPresenceSection />
       <TestimonialsSection />
       <CTASection />

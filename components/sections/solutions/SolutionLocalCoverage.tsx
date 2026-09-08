@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { localBusiness } from "@/data/local-seo";
 import { contactInfo } from "@/data/site";
 
-const mapSrc = `https://maps.google.com/maps?q=${localBusiness.geo.latitude},${localBusiness.geo.longitude}&z=11&hl=pt-BR&output=embed`;
+const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(localBusiness.mapEmbedQuery)}&z=15&hl=pt-BR&output=embed`;
 
 type SolutionLocalCoverageProps = {
   solutionTitle: string;

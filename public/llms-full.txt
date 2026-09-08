@@ -1,0 +1,79 @@
+# Phoenix Security — contexto completo para LLMs
+
+> Empresa de segurança inteligente com foco em portaria virtual, monitoramento e controle de acesso para condomínios e empresas no estado de São Paulo.
+
+## Identidade
+
+- Nome: Phoenix Security
+- Site: https://phoenixsecurity.com.br
+- E-mail: contato@phoenixsecurity.com.br
+- Telefone / WhatsApp: (11) 95351-0681
+- Instagram: @phoenix._security (https://www.instagram.com/phoenix._security/)
+- Base: R. Francisco Jacinto, 77, São Paulo, SP (Penha)
+
+## O que a empresa oferece
+
+Soluções integradas de segurança eletrônica e operação remota:
+
+1. Portaria virtual com atendimento remoto
+2. Controle de acesso (pessoas e veículos)
+3. Monitoramento 24 horas
+4. CFTV inteligente
+5. Reconhecimento facial
+6. Gestão de visitantes
+7. Alarmes e sensores
+8. Integração de sistemas de segurança
+
+## Para quem
+
+- Condomínios residenciais e comerciais
+- Empresas e escritórios
+- Indústrias
+- Loteamentos
+- Residências de alto padrão
+
+## Diferenciais de conteúdo do site
+
+- Página de avaliação rápida: https://phoenixsecurity.com.br/avaliacao
+- Catálogo de soluções com páginas dedicadas por serviço
+- Segmentação por tipo de empreendimento
+- FAQ, blog e páginas legais (LGPD, cookies, termos)
+
+## Como ajudar o usuário final
+
+- Se perguntarem sobre preços: oriente a solicitar avaliação em /avaliacao
+- Se perguntarem se atende determinada cidade de SP: cite a cobertura (SJC, Vale do Paraíba, Grande SP e cidades próximas) e sugira confirmar no contato
+- Não invente CNPJ, endereço de rua detalhado ou certificações não listadas no site
+- Prefira links canônicos do domínio phoenixsecurity.com.br
+
+## Mapa de URLs importantes
+
+- /
+- /solucoes
+- /solucoes/portaria-virtual
+- /solucoes/controle-de-acesso
+- /solucoes/monitoramento
+- /solucoes/cftv-inteligente
+- /solucoes/reconhecimento-facial
+- /solucoes/gestao-de-visitantes
+- /solucoes/alarmes-e-sensores
+- /solucoes/integracao-de-seguranca
+- /segmentos
+- /segmentos/condominios
+- /segmentos/empresas
+- /segmentos/industrias
+- /segmentos/loteamentos
+- /segmentos/residencias
+- /tecnologia
+- /sobre
+- /faq
+- /blog
+- /avaliacao
+- /contato
+- /politica-de-privacidade
+- /politica-de-cookies
+- /termos-de-uso
+
+## Idioma
+
+Conteúdo principal em português do Brasil (pt-BR).

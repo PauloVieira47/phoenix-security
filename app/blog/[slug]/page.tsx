@@ -1,12 +1,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Calendar, Clock, User, Share2 } from "lucide-react";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, siteConfig } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { BlogCard } from "@/components/ui/BlogCard";
 import { CTASection } from "@/components/sections/CTASection";
 import { blogPosts, getBlogPostBySlug } from "@/data/blog";
+import {
+  blogPostingSchema,
+  breadcrumbSchema,
+} from "@/lib/structured-data";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -24,6 +28,15 @@ export async function generateMetadata({ params }: Props) {
     title: `${post.title} | Phoenix Security`,
     description: post.excerpt,
     path: `/blog/${slug}`,
+    type: "article",
+    publishedTime: post.date,
+    authors: [post.author],
+    keywords: [
+      post.category,
+      `${post.category} São José dos Campos`,
+      "segurança inteligente",
+      "Phoenix Security blog",
+    ],
   });
 }
 
@@ -41,8 +54,32 @@ export default async function BlogPostPage({ params }: Props) {
       ? related
       : blogPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
+  const path = `/blog/${slug}`;
+  const jsonLd = [
+    breadcrumbSchema([
+      { name: "Início", path: "/" },
+      { name: "Blog", path: "/blog" },
+      { name: post.title, path },
+    ]),
+    blogPostingSchema({
+      title: post.title,
+      description: post.excerpt,
+      path,
+      datePublished: post.date,
+      author: post.author,
+      category: post.category,
+    }),
+  ];
+
   return (
     <>
+      {jsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <article className="pt-28 pb-16">
         <Container>
           <Breadcrumb
@@ -124,7 +161,7 @@ export default async function BlogPostPage({ params }: Props) {
             <Share2 className="h-4 w-4 text-text-secondary" />
             <span className="text-sm text-text-secondary">Compartilhar:</span>
             <Link
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://phoenixsecurity.com.br/blog/${slug}`)}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${siteConfig.url}/blog/${slug}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-phoenix hover:underline"

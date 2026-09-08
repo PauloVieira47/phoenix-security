@@ -4,21 +4,49 @@ import { Container } from "@/components/ui/Container";
 import { FAQAccordion } from "@/components/ui/FAQAccordion";
 import { CTASection } from "@/components/sections/CTASection";
 import { faqItems } from "@/data/faq";
+import {
+  breadcrumbSchema,
+  faqSchema,
+} from "@/lib/structured-data";
+import { localBusiness } from "@/data/local-seo";
+
+const allFaq = faqItems.flatMap((section) => section.questions);
 
 export const metadata = createMetadata({
-  title: "FAQ | Phoenix Security",
+  title: `FAQ Segurança e Portaria Virtual em ${localBusiness.city} | Phoenix Security`,
   description:
-    "Perguntas frequentes sobre portaria virtual, segurança, instalação, monitoramento, controle de acesso e suporte.",
+    "Perguntas frequentes sobre portaria virtual, controle de acesso, monitoramento 24h, instalação e suporte da Phoenix Security em São José dos Campos e São Paulo.",
   path: "/faq",
+  keywords: [
+    "FAQ portaria virtual",
+    "dúvidas controle de acesso",
+    "monitoramento 24h perguntas",
+    "segurança condomínio SJC",
+  ],
 });
 
 export default function FAQPage() {
+  const jsonLd = [
+    breadcrumbSchema([
+      { name: "Início", path: "/" },
+      { name: "FAQ", path: "/faq" },
+    ]),
+    faqSchema(allFaq),
+  ];
+
   return (
     <>
+      {jsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <PageHero
         label="FAQ"
         title="Perguntas frequentes."
-        subtitle="Encontre respostas para as dúvidas mais comuns sobre nossas soluções e serviços."
+        subtitle="Respostas sobre portaria virtual, monitoramento e segurança inteligente."
         breadcrumbs={[{ label: "Início", href: "/" }, { label: "FAQ" }]}
       />
 

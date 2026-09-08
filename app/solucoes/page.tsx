@@ -1,6 +1,11 @@
 import { createMetadata } from "@/lib/seo";
 import { CTASection } from "@/components/sections/CTASection";
 import { SolutionsIndexContent } from "@/components/sections/SolutionsIndexContent";
+import { solutions } from "@/data/solutions";
+import {
+  breadcrumbSchema,
+  itemListSchema,
+} from "@/lib/structured-data";
 
 export const metadata = createMetadata({
   title: "Soluções de Segurança em SJC e SP | Phoenix Security",
@@ -20,8 +25,33 @@ export const metadata = createMetadata({
 });
 
 export default function SolucoesPage() {
+  const jsonLd = [
+    breadcrumbSchema([
+      { name: "Início", path: "/" },
+      { name: "Soluções", path: "/solucoes" },
+    ]),
+    itemListSchema({
+      name: "Soluções Phoenix Security",
+      description:
+        "Catálogo de soluções de segurança inteligente para condomínios e empresas.",
+      path: "/solucoes",
+      items: solutions.map((s) => ({
+        name: s.title,
+        path: `/solucoes/${s.slug}`,
+        description: s.shortDescription,
+      })),
+    }),
+  ];
+
   return (
     <>
+      {jsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <SolutionsIndexContent />
       <CTASection />
     </>

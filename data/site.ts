@@ -15,8 +15,8 @@ export const contactInfo = {
   instagram: socialLinks.instagram,
   instagramHandle: socialLinks.instagramHandle,
   linkedin: "",
-  address: "São José dos Campos, SP",
-  addressFull: "São José dos Campos, São Paulo, Brasil",
+  address: "R. Francisco Jacinto, 77, São Paulo, SP",
+  addressFull: "R. Francisco Jacinto, 77, São Paulo, SP, Brasil",
 };
 
 export const companyProfile = {

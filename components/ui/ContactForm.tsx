@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { GlowButton } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { trackFormSubmit } from "@/components/analytics/track";
 
 type FormData = {
   nome: string;
@@ -74,6 +75,10 @@ export function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
+      trackFormSubmit("contato", {
+        tipo: form.tipo || "nao_informado",
+        solucao: form.solucao || "nao_informado",
+      });
       setSubmitted(true);
     }
   };

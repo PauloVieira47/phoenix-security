@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { Home, MessageCircle } from "lucide-react";
+import { Home } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PhoenixLogo } from "@/components/ui/PhoenixLogo";
 import { GlowButton } from "@/components/ui/Button";
 import { contactInfo } from "@/data/site";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { TrackedWhatsAppLink } from "@/components/analytics/TrackedWhatsAppLink";
 
 export default function NotFound() {
   return (
@@ -31,15 +33,16 @@ export default function NotFound() {
               <Home className="h-4 w-4" />
               Ir para o início
             </GlowButton>
-            <Link
+            <TrackedWhatsAppLink
               href={contactInfo.whatsappLink}
+              location="404"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm text-white transition-colors hover:border-[#25D366]/50 hover:text-[#25D366]"
             >
-              <MessageCircle className="h-4 w-4" />
+              <WhatsAppIcon className="h-4 w-4" />
               WhatsApp
-            </Link>
+            </TrackedWhatsAppLink>
           </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-text-secondary">

@@ -1,21 +1,23 @@
 export const localBusiness = {
-  city: "São José dos Campos",
+  city: "São Paulo",
   state: "SP",
   stateFull: "São Paulo",
-  region: "Vale do Paraíba Paulista",
+  region: "Grande São Paulo",
   country: "Brasil",
-  postalCode: "12200-000",
-  streetAddress: "São José dos Campos, SP",
+  postalCode: "03616-100",
+  streetAddress: "R. Francisco Jacinto, 77",
+  neighborhood: "Penha",
   geo: {
-    latitude: -23.1896,
-    longitude: -45.8841,
+    latitude: -23.5151391,
+    longitude: -46.5280394,
   },
-  mapEmbedQuery: "São José dos Campos, SP, Brasil",
+  mapEmbedQuery: "R. Francisco Jacinto, 77, São Paulo, SP, Brasil",
   googleMapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=São+José+dos+Campos,+SP",
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent("R. Francisco Jacinto, 77, São Paulo, SP"),
   serviceArea: [
-    "São José dos Campos",
     "São Paulo",
+    "São José dos Campos",
     "Jacareí",
     "Taubaté",
     "Caçapava",

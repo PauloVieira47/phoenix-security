@@ -1,0 +1,12 @@
+/* TEAM */
+Company: Phoenix Security
+Contact: contato@phoenixsecurity.com.br
+Location: R. Francisco Jacinto, 77, São Paulo, SP, Brasil
+
+/* SITE */
+Standards: Next.js, HTML5, Schema.org
+Language: pt-BR
+Doctype: HTML5
+
+/* THANKS */
+Instagram: https://www.instagram.com/phoenix._security/

@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { Phone, Mail, MessageCircle } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 import { contactInfo, footerLinks } from "@/data/site";
 import { PhoenixLogo } from "@/components/ui/PhoenixLogo";
 import { Container } from "@/components/ui/Container";
+import { InstagramIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { TrackedWhatsAppLink } from "@/components/analytics/TrackedWhatsAppLink";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,20 +16,29 @@ export function Footer() {
           <div className="lg:col-span-1">
             <PhoenixLogo />
             <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-              Segurança inteligente para condomínios e empresas em São José dos
-              Campos, Vale do Paraíba e Grande São Paulo.
+              Segurança inteligente para condomínios e empresas em São Paulo,
+              Vale do Paraíba e Grande São Paulo.
             </p>
-            <div className="mt-6">
+            <div className="mt-6 flex items-center gap-3">
               <a
                 href={contactInfo.instagram}
                 target="_blank"
                 rel="noopener noreferrer me"
-                className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-phoenix"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-text-secondary transition-colors hover:border-phoenix/40 hover:text-phoenix"
                 aria-label={`Instagram ${contactInfo.instagramHandle}`}
               >
-                <span className="text-phoenix">IG</span>
-                {contactInfo.instagramHandle}
+                <InstagramIcon className="h-4 w-4" />
               </a>
+              <TrackedWhatsAppLink
+                href={contactInfo.whatsappLink}
+                location="footer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-text-secondary transition-colors hover:border-phoenix/40 hover:text-phoenix"
+                aria-label="WhatsApp Phoenix Security"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+              </TrackedWhatsAppLink>
             </div>
           </div>
 
@@ -91,15 +102,16 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <a
+                <TrackedWhatsAppLink
                   href={contactInfo.whatsappLink}
+                  location="footer"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-phoenix"
                 >
-                  <MessageCircle className="h-4 w-4 shrink-0" />
+                  <WhatsAppIcon className="h-4 w-4 shrink-0" />
                   {contactInfo.whatsapp}
-                </a>
+                </TrackedWhatsAppLink>
               </li>
               <li>
                 <a

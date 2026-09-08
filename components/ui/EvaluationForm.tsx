@@ -2,10 +2,11 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PhoenixLogo } from "@/components/ui/PhoenixLogo";
-import { contactInfo } from "@/data/site";
+import { GlowButton } from "@/components/ui/Button";
+import { trackFormSubmit } from "@/components/analytics/track";
 
 const tipos = [
   "Condomínio",
@@ -27,8 +28,9 @@ const interesses = [
 
 type FormState = {
   nome: string;
-  whatsapp: string;
+  telefone: string;
   tipo: string;
+  tipoOutro: string;
   interesse: string;
   lgpd: boolean;
 };
@@ -44,15 +46,55 @@ const chipClass = (active: boolean) =>
       : "border-white/10 text-text-secondary hover:border-white/25 hover:text-white",
   );
 
+function onlyDigits(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+/** Remove +55 / 55 do autofill e deixa só DDD + número */
+function nationalPhoneDigits(value: string) {
+  let digits = onlyDigits(value);
+
+  if (digits.startsWith("55") && digits.length >= 12) {
+    digits = digits.slice(2);
+  }
+
+  return digits.slice(0, 11);
+}
+
+/** Máscara BR: (11) 98888-8888 ou (11) 3888-8888 */
+function formatPhone(value: string) {
+  const digits = nationalPhoneDigits(value);
+  if (digits.length === 0) return "";
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 6) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  }
+  if (digits.length <= 10) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  }
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
+function isValidPhone(value: string) {
+  const digits = nationalPhoneDigits(value);
+  if (digits.length < 10 || digits.length > 11) return false;
+  const ddd = Number(digits.slice(0, 2));
+  if (ddd < 11 || ddd > 99) return false;
+  if (digits.length === 11 && digits[2] !== "9") return false;
+  return true;
+}
+
 export function EvaluationForm() {
   const [form, setForm] = useState<FormState>({
     nome: "",
-    whatsapp: "",
+    telefone: "",
     tipo: "",
+    tipoOutro: "",
     interesse: "",
     lgpd: false,
   });
   const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -62,35 +104,54 @@ export function EvaluationForm() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (
-      !form.nome.trim() ||
-      !form.whatsapp.trim() ||
-      !form.tipo ||
-      !form.interesse
-    ) {
-      setError("Preencha nome, WhatsApp, tipo e interesse.");
+    if (!form.nome.trim()) {
+      setError("Informe seu nome.");
+      return;
+    }
+    if (!isValidPhone(form.telefone)) {
+      setError("Informe um telefone válido com DDD, ex: (11) 95351-0681.");
+      return;
+    }
+    if (!form.tipo) {
+      setError("Selecione o tipo de empreendimento.");
+      return;
+    }
+    if (form.tipo === "Outro" && !form.tipoOutro.trim()) {
+      setError("Descreva o tipo de empreendimento.");
+      return;
+    }
+    if (!form.interesse) {
+      setError("Selecione o que você procura.");
       return;
     }
     if (!form.lgpd) {
-      setError("Marque o consentimento para seguir.");
+      setError("Marque o consentimento para enviar.");
       return;
     }
 
-    const message = [
-      "Olá! Quero solicitar uma avaliação rápida.",
-      "",
-      `Nome: ${form.nome.trim()}`,
-      `WhatsApp: ${form.whatsapp.trim()}`,
-      `Empreendimento: ${form.tipo}`,
-      `Interesse: ${form.interesse}`,
-    ].join("\n");
+    trackFormSubmit("avaliacao", {
+      tipo: form.tipo === "Outro" ? form.tipoOutro.trim() || "Outro" : form.tipo,
+      interesse: form.interesse,
+    });
+    setSubmitted(true);
+  }
 
-    const url = `https://wa.me/5511953510681?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  if (submitted) {
+    return (
+      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-10 text-center">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/15">
+          <Check className="h-6 w-6 text-emerald-400" />
+        </div>
+        <h3 className="text-lg font-semibold text-white">Solicitação enviada</h3>
+        <p className="mt-2 text-sm text-text-secondary">
+          Recebemos seus dados. Nossa equipe entra em contato em breve.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-white">
@@ -107,15 +168,17 @@ export function EvaluationForm() {
         </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium text-white">
-            WhatsApp
+            Telefone
           </label>
           <input
             type="tel"
-            value={form.whatsapp}
-            onChange={(e) => update("whatsapp", e.target.value)}
+            inputMode="tel"
+            value={form.telefone}
+            onChange={(e) => update("telefone", formatPhone(e.target.value))}
+            onBlur={(e) => update("telefone", formatPhone(e.target.value))}
             className={inputClass}
             placeholder="(00) 00000-0000"
-            autoComplete="tel"
+            autoComplete="tel-national"
           />
         </div>
       </div>
@@ -129,13 +192,35 @@ export function EvaluationForm() {
             <button
               key={tipo}
               type="button"
-              onClick={() => update("tipo", tipo)}
+              onClick={() => {
+                setForm((prev) => ({
+                  ...prev,
+                  tipo,
+                  tipoOutro: tipo === "Outro" ? prev.tipoOutro : "",
+                }));
+                setError("");
+              }}
               className={chipClass(form.tipo === tipo)}
             >
               {tipo}
             </button>
           ))}
         </div>
+        {form.tipo === "Outro" && (
+          <div className="mt-3">
+            <label className="mb-1.5 block text-sm font-medium text-white">
+              Qual o tipo?
+            </label>
+            <input
+              type="text"
+              value={form.tipoOutro}
+              onChange={(e) => update("tipoOutro", e.target.value)}
+              className={inputClass}
+              placeholder="Descreva o empreendimento"
+              autoFocus
+            />
+          </div>
+        )}
       </div>
 
       <div>
@@ -179,17 +264,9 @@ export function EvaluationForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(37,211,102,0.28)] transition-transform hover:scale-[1.01] hover:bg-[#2fe06f]"
-      >
-        <MessageCircle className="h-5 w-5" />
-        Falar no WhatsApp agora
-      </button>
-
-      <p className="text-center text-xs text-white/40">
-        Sem etapas. Seus dados vão direto para {contactInfo.whatsapp}.
-      </p>
+      <GlowButton type="submit" className="w-full justify-center">
+        Enviar
+      </GlowButton>
 
       <div className="flex justify-center pt-2 opacity-80">
         <PhoenixLogo className="[&_img]:h-6 sm:[&_img]:h-7" />

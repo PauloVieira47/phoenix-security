@@ -5,11 +5,16 @@ import { localBusiness } from "@/data/local-seo";
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "SecuritySystemService",
+    "@type": ["Organization", "LocalBusiness"],
     "@id": `${siteConfig.url}/#organization`,
     name: siteConfig.name,
+    legalName: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.png`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${siteConfig.url}${siteConfig.logo}`,
+    },
+    image: `${siteConfig.url}${siteConfig.ogImage}`,
     description: siteConfig.description,
     email: contactInfo.email,
     telephone: contactInfo.phone,
@@ -36,12 +41,38 @@ export function organizationSchema() {
     })),
     sameAs: [contactInfo.instagram].filter(Boolean),
     priceRange: "$$",
+    knowsAbout: [
+      "Portaria virtual",
+      "Controle de acesso",
+      "Monitoramento 24h",
+      "CFTV inteligente",
+      "Reconhecimento facial",
+      "Gestão de visitantes",
+      "Alarmes e sensores",
+      "Integração de segurança",
+    ],
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         opens: "08:00",
         closes: "18:00",
+      },
+    ],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: contactInfo.phone,
+        contactType: "sales",
+        areaServed: "BR",
+        availableLanguage: ["Portuguese"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: contactInfo.phone,
+        contactType: "customer support",
+        areaServed: "BR",
+        availableLanguage: ["Portuguese"],
       },
     ],
   };
@@ -57,6 +88,11 @@ export function websiteSchema() {
     description: siteConfig.description,
     publisher: { "@id": `${siteConfig.url}/#organization` },
     inLanguage: "pt-BR",
+    potentialAction: {
+      "@type": "CommunicateAction",
+      target: `${siteConfig.url}/avaliacao`,
+      name: "Solicitar avaliação",
+    },
   };
 }
 
@@ -80,7 +116,7 @@ export function localBusinessSchema() {
     "@type": "LocalBusiness",
     "@id": `${siteConfig.url}/#localbusiness`,
     name: `${siteConfig.name}, ${localBusiness.city}`,
-    image: `${siteConfig.url}/og-image.jpg`,
+    image: `${siteConfig.url}${siteConfig.ogImage}`,
     url: siteConfig.url,
     telephone: contactInfo.phone,
     email: contactInfo.email,
@@ -212,5 +248,69 @@ export function solutionKeywords(solutionTitle: string): string[] {
     `segurança ${base} SP`,
     `Phoenix Security ${solutionTitle}`,
   ];
+}
+
+export function blogPostingSchema(input: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  dateModified?: string;
+  author?: string;
+  image?: string;
+  category?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${siteConfig.url}${input.path}#article`,
+    headline: input.title,
+    description: input.description,
+    url: `${siteConfig.url}${input.path}`,
+    datePublished: input.datePublished,
+    dateModified: input.dateModified || input.datePublished,
+    inLanguage: "pt-BR",
+    author: {
+      "@type": "Organization",
+      name: input.author || siteConfig.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}${siteConfig.logo}`,
+      },
+    },
+    image: `${siteConfig.url}${input.image || siteConfig.ogImage}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}${input.path}`,
+    },
+    ...(input.category ? { articleSection: input.category } : {}),
+  };
+}
+
+export function itemListSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  items: { name: string; path: string; description?: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: input.name,
+    description: input.description,
+    url: `${siteConfig.url}${input.path}`,
+    numberOfItems: input.items.length,
+    itemListElement: input.items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: `${siteConfig.url}${item.path}`,
+      ...(item.description ? { description: item.description } : {}),
+    })),
+  };
 }
 

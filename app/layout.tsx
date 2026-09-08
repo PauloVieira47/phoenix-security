@@ -1,16 +1,19 @@
 import { Inter } from "next/font/google";
 import { headers } from "next/headers";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { LoadingGate } from "@/components/layout/PhoenixLoader";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
-import { siteConfig, createMetadata } from "@/lib/seo";
+import { siteConfig, createMetadata, rootMetadataExtras } from "@/lib/seo";
 import { isComingSoonMode } from "@/lib/coming-soon";
 import {
   organizationSchema,
   websiteSchema,
+  localBusinessSchema,
 } from "@/lib/structured-data";
 import "./globals.css";
 
@@ -21,18 +24,18 @@ const inter = Inter({
 });
 
 export const metadata = {
+  ...rootMetadataExtras,
   ...createMetadata({
     title: siteConfig.title,
     description: siteConfig.description,
   }),
-  icons: {
-    icon: [{ url: "/icon_phoenix.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/icon_phoenix.svg", type: "image/svg+xml" }],
-    shortcut: ["/icon_phoenix.svg"],
-  },
 };
 
-const globalJsonLd = [organizationSchema(), websiteSchema()];
+const globalJsonLd = [
+  organizationSchema(),
+  websiteSchema(),
+  localBusinessSchema(),
+];
 
 export default async function RootLayout({
   children,
@@ -45,6 +48,15 @@ export default async function RootLayout({
 
   return (
     <html lang="pt-BR" className={`${inter.variable} h-full`}>
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={`${siteConfig.name} Blog`}
+          href="/rss.xml"
+        />
+        <link rel="author" href="/humans.txt" />
+      </head>
       <body className="min-h-full flex flex-col bg-bg-primary text-white antialiased">
         {!comingSoon && (
           <script
@@ -65,6 +77,8 @@ export default async function RootLayout({
             <CookieConsent />
           </LoadingGate>
         )}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

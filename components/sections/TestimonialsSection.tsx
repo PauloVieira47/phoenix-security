@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { testimonials } from "@/data/home";
@@ -19,12 +20,16 @@ export function TestimonialsSection() {
       setActive((prev) => (prev + 1) % testimonials.length);
     }, FEATURED_INTERVAL_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [active]);
+
+  function go(delta: number) {
+    setActive((prev) => (prev + delta + testimonials.length) % testimonials.length);
+  }
 
   return (
-    <section className="overflow-hidden py-24 md:py-32">
+    <section className="overflow-hidden py-16 md:py-24 lg:py-32">
       <Container>
-        <div className="mb-10 flex items-end justify-between gap-6">
+        <div className="mb-8 flex items-end justify-between gap-4 md:mb-10">
           <SectionLabel>Depoimentos</SectionLabel>
           <div className="flex items-center gap-2">
             {testimonials.map((item, i) => (
@@ -43,7 +48,61 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        {/* Mobile: um depoimento por vez */}
+        <div className="lg:hidden">
+          <div className="relative overflow-hidden rounded-2xl border border-white/8 bg-bg-card/60 p-5 sm:p-6">
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={featured.name}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <p className="text-lg font-light leading-relaxed text-white sm:text-xl">
+                  &ldquo;{featured.text}&rdquo;
+                </p>
+                <footer className="mt-6 border-t border-white/8 pt-4">
+                  <cite className="not-italic">
+                    <span className="block text-sm font-medium text-white">
+                      {featured.name}
+                    </span>
+                    <span className="mt-1 block text-xs text-text-secondary">
+                      {featured.role}, {featured.company}
+                    </span>
+                  </cite>
+                </footer>
+              </motion.blockquote>
+            </AnimatePresence>
+
+            <div className="mt-6 flex items-center justify-between">
+              <p className="text-[10px] uppercase tracking-widest text-text-secondary/40">
+                {active + 1} / {testimonials.length}
+              </p>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  aria-label="Depoimento anterior"
+                  onClick={() => go(-1)}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/70 transition-colors hover:border-white/25 hover:text-white"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Próximo depoimento"
+                  onClick={() => go(1)}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/70 transition-colors hover:border-white/25 hover:text-white"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden gap-12 lg:grid lg:grid-cols-12 lg:gap-16">
           <div className="relative min-h-[280px] lg:col-span-7 lg:min-h-[320px]">
             <AnimatePresence mode="wait">
               <motion.blockquote
@@ -54,7 +113,7 @@ export function TestimonialsSection() {
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-0"
               >
-                <p className="text-2xl font-light leading-relaxed text-white md:text-3xl lg:text-4xl">
+                <p className="text-3xl font-light leading-relaxed text-white lg:text-4xl">
                   &ldquo;{featured.text}&rdquo;
                 </p>
                 <footer className="mt-8 border-t border-white/5 pt-6">
@@ -63,7 +122,7 @@ export function TestimonialsSection() {
                       {featured.name}
                     </span>
                     <span className="mt-1 block text-sm text-text-secondary">
-                      {featured.role} · {featured.company}
+                      {featured.role}, {featured.company}
                     </span>
                   </cite>
                 </footer>
@@ -100,7 +159,7 @@ export function TestimonialsSection() {
             </AnimatePresence>
 
             <p className="text-[10px] uppercase tracking-widest text-text-secondary/40">
-              Conteúdo ilustrativo · substituível
+              Conteúdo ilustrativo
             </p>
           </div>
         </div>

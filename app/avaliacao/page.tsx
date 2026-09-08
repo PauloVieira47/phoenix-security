@@ -4,10 +4,15 @@ import { Container } from "@/components/ui/Container";
 import { EvaluationForm } from "@/components/ui/EvaluationForm";
 
 export const metadata = createMetadata({
-  title: "Solicitar Avaliação | Phoenix Security",
+  title: "Solicitar Avaliação de Segurança | Phoenix Security SJC e SP",
   description:
-    "Formulário rápido para solicitar avaliação. Em seguida fale direto no WhatsApp com a Phoenix Security.",
+    "Solicite uma avaliação rápida da Phoenix Security. Portaria virtual, monitoramento e controle de acesso para condomínios e empresas em São José dos Campos e São Paulo.",
   path: "/avaliacao",
+  keywords: [
+    "avaliação segurança condomínio",
+    "orçamento portaria virtual SJC",
+    "solicitar avaliação Phoenix Security",
+  ],
 });
 
 export default function AvaliacaoPage() {
@@ -34,8 +39,7 @@ export default function AvaliacaoPage() {
               Solicite em um minuto
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-              Um formulário só. Sem etapas. No final você segue direto no
-              WhatsApp.
+              Preencha os dados abaixo. Nossa equipe retorna o contato.
             </p>
 
             <div className="mt-8">
