@@ -25,7 +25,7 @@ function liveClock() {
 }
 
 function HeroHud() {
-  const [clock, setClock] = useState(liveClock);
+  const [clock, setClock] = useState("--:--:--");
   const [active, setActive] = useState(0);
   const visible = [
     feedEvents[active % feedEvents.length],
@@ -34,6 +34,7 @@ function HeroHud() {
   ];
 
   useEffect(() => {
+    setClock(liveClock());
     const clockId = setInterval(() => setClock(liveClock()), 1000);
     const feedId = setInterval(() => {
       setActive((prev) => (prev + 1) % feedEvents.length);

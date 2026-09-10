@@ -4,6 +4,8 @@ import { Calendar, Clock, User, Share2 } from "lucide-react";
 import { createMetadata, siteConfig } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { BlogPostBody } from "@/components/blog/BlogPostBody";
+import { BlogCoverImage } from "@/components/blog/BlogPostMedia";
 import { BlogCard } from "@/components/ui/BlogCard";
 import { CTASection } from "@/components/sections/CTASection";
 import { blogPosts, getBlogPostBySlug } from "@/data/blog";
@@ -31,6 +33,7 @@ export async function generateMetadata({ params }: Props) {
     type: "article",
     publishedTime: post.date,
     authors: [post.author],
+    images: [post.coverImage],
     keywords: [
       post.category,
       `${post.category} São José dos Campos`,
@@ -68,6 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
       datePublished: post.date,
       author: post.author,
       category: post.category,
+      image: post.coverImage,
     }),
   ];
 
@@ -121,41 +125,9 @@ export default async function BlogPostPage({ params }: Props) {
             </span>
           </div>
 
-          <div className="relative mt-10 aspect-[21/9] overflow-hidden rounded-2xl border border-white/8 bg-gradient-to-br from-phoenix/20 to-bg-card">
-            <div className="absolute inset-0 grid-bg opacity-30" />
-          </div>
+          <BlogCoverImage src={post.coverImage} alt={post.coverAlt} />
 
-          <div className="prose-custom mt-10 max-w-3xl">
-            {post.content.split("\n").map((paragraph, i) => {
-              if (paragraph.startsWith("## ")) {
-                return (
-                  <h2 key={i} className="mt-8 mb-4 text-2xl font-bold text-white">
-                    {paragraph.replace("## ", "")}
-                  </h2>
-                );
-              }
-              if (paragraph.startsWith("- ")) {
-                return (
-                  <li key={i} className="ml-4 text-text-secondary leading-relaxed">
-                    {paragraph.replace("- ", "")}
-                  </li>
-                );
-              }
-              if (paragraph.match(/^\d+\./)) {
-                return (
-                  <li key={i} className="ml-4 text-text-secondary leading-relaxed list-decimal">
-                    {paragraph.replace(/^\d+\.\s*/, "")}
-                  </li>
-                );
-              }
-              if (paragraph.trim() === "") return null;
-              return (
-                <p key={i} className="mb-4 text-text-secondary leading-relaxed">
-                  {paragraph}
-                </p>
-              );
-            })}
-          </div>
+          <BlogPostBody content={post.content} />
 
           <div className="mt-10 flex items-center gap-4 border-t border-white/5 pt-8">
             <Share2 className="h-4 w-4 text-text-secondary" />

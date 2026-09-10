@@ -25,6 +25,7 @@ export async function GET() {
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <description>${escapeXml(post.excerpt)}</description>
       <category>${escapeXml(post.category)}</category>
+      <enclosure url="${siteConfig.url}${post.coverImage}" type="image/jpeg" />
     </item>`;
     })
     .join("");

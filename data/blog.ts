@@ -7,7 +7,8 @@ export type BlogPost = {
   author: string;
   date: string;
   readTime: string;
-  image: string;
+  coverImage: string;
+  coverAlt: string;
 };
 
 export const blogCategories = [
@@ -33,6 +34,8 @@ A portaria virtual representa uma evolução significativa na forma como condom�
 
 Com atendimento remoto integrado a câmeras, interfones e sistemas de controle de acesso, a operação ganha padronização, rastreabilidade e disponibilidade 24 horas.
 
+[media:visual:portaria-virtual|Fluxo da portaria remota: interfone → operador → liberação de acesso com registro.]
+
 ## Benefícios para síndicos e administradoras
 
 - Redução de custos operacionais
@@ -48,7 +51,8 @@ A combinação de operadores especializados com plataformas inteligentes permite
     author: "Equipe Phoenix",
     date: "2026-03-15",
     readTime: "5 min",
-    image: "portaria",
+    coverImage: "/background-controle-acesso.jpg",
+    coverAlt: "Portaria virtual e controle de acesso em condomínio",
   },
   {
     slug: "controle-acesso-inteligente",
@@ -59,6 +63,8 @@ A combinação de operadores especializados com plataformas inteligentes permite
 Os métodos tradicionais de controle de acesso estão sendo substituídos por tecnologias mais seguras, ágeis e inteligentes.
 
 ## Tecnologias em destaque
+
+[media:visual:reconhecimento-facial|Biometria facial: identificação sem contato na entrada do empreendimento.]
 
 - Reconhecimento facial sem contato
 - Biometria digital de alta precisão
@@ -73,7 +79,8 @@ Sistemas fragmentados dificultam auditoria e aumentam vulnerabilidades. Uma plat
     author: "Equipe Phoenix",
     date: "2026-03-10",
     readTime: "4 min",
-    image: "acesso",
+    coverImage: "/background-facial.jpg",
+    coverAlt: "Controle de acesso com reconhecimento facial",
   },
   {
     slug: "monitoramento-24h-importancia",
@@ -87,6 +94,8 @@ Ter câmeras instaladas é apenas o primeiro passo. O monitoramento ativo é o q
 
 No modelo passivo, eventos são registrados mas ninguém responde em tempo real. No modelo ativo, operadores especializados analisam alertas e acionam protocolos de resposta.
 
+[media:visual:monitoramento|Central 24h: operadores acompanham múltiplas telas e acionam protocolos de resposta.]
+
 ## Impacto na segurança
 
 - Resposta imediata a incidentes
@@ -98,7 +107,8 @@ No modelo passivo, eventos são registrados mas ninguém responde em tempo real.
     author: "Equipe Phoenix",
     date: "2026-03-05",
     readTime: "6 min",
-    image: "monitoramento",
+    coverImage: "/background-monitoramento.jpg",
+    coverAlt: "Central de monitoramento 24 horas",
   },
   {
     slug: "seguranca-condominios-2026",
@@ -118,12 +128,15 @@ O mercado de segurança para condomínios evolui rapidamente, impulsionado por n
 ## O que considerar
 
 Ao avaliar soluções, priorize fornecedores que ofereçam integração, suporte especializado e histórico comprovado no segmento.
+
+[media:visual:integracao|Ecossistema integrado: CFTV, alarmes, acesso e portaria conectados em uma plataforma.]
     `.trim(),
     category: "Condomínios",
     author: "Equipe Phoenix",
     date: "2026-02-28",
     readTime: "7 min",
-    image: "condominio",
+    coverImage: "/background-condominios.jpg",
+    coverAlt: "Segurança integrada para condomínios",
   },
   {
     slug: "tecnologia-seguranca-predial",
@@ -143,12 +156,15 @@ A digitalização da segurança predial não é mais uma tendência futura: é u
 ## Próximos passos
 
 Empreendimentos que ainda operam com sistemas isolados têm muito a ganhar com uma avaliação da infraestrutura atual e um plano de integração gradual.
+
+[media:visual:plataforma|Painel Phoenix: visão centralizada de eventos, acessos e alertas do empreendimento.]
     `.trim(),
     category: "Tecnologia",
     author: "Equipe Phoenix",
     date: "2026-02-20",
     readTime: "5 min",
-    image: "tecnologia",
+    coverImage: "/background-integracao.jpg",
+    coverAlt: "Integração tecnológica na segurança predial",
   },
   {
     slug: "gestao-visitantes-melhores-praticas",
@@ -166,6 +182,8 @@ A gestão de visitantes é um dos pontos mais críticos, e mais negligenciados, 
 - Notificação imediata ao morador
 - Histórico consultável para auditoria
 
+[media:visual:visitantes|Convite digital: visitante apresenta QR Code e o acesso é registrado automaticamente.]
+
 ## Tecnologia como aliada
 
 Sistemas de gestão de visitantes integrados ao controle de acesso eliminam filas, reduzem erros humanos e oferecem rastreabilidade completa.
@@ -174,7 +192,8 @@ Sistemas de gestão de visitantes integrados ao controle de acesso eliminam fila
     author: "Equipe Phoenix",
     date: "2026-02-15",
     readTime: "4 min",
-    image: "visitantes",
+    coverImage: "/background-gestao-visitantes.jpg",
+    coverAlt: "Gestão de visitantes em condomínios",
   },
 ];
 
