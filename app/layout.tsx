@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { MobileConversionBar } from "@/components/layout/MobileConversionBar";
+import { MobileMenuProvider } from "@/components/layout/MobileMenuContext";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { LoadingGate } from "@/components/layout/PhoenixLoader";
@@ -76,12 +77,14 @@ export default async function RootLayout({
           </LoadingGate>
         ) : (
           <LoadingGate>
-            <Header />
-            <main className="flex-1 pb-[4.5rem] md:pb-0">{children}</main>
-            <Footer />
-            <MobileConversionBar />
-            <WhatsAppButton />
-            <CookieConsent />
+            <MobileMenuProvider>
+              <Header />
+              <main className="flex-1 pb-[4.5rem] md:pb-0">{children}</main>
+              <Footer />
+              <MobileConversionBar />
+              <WhatsAppButton />
+              <CookieConsent />
+            </MobileMenuProvider>
           </LoadingGate>
         )}
         {!comingSoon && <GoogleAnalytics />}

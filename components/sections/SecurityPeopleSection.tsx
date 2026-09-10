@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -31,9 +32,25 @@ function FrameCorners() {
   );
 }
 
+function CameraStill({ className }: { className?: string }) {
+  return (
+    <div className={`relative h-full min-h-[220px] w-full sm:min-h-[280px] ${className ?? ""}`}>
+      <Image
+        src="/camera-phoenix.jpg"
+        alt="Câmera de segurança Phoenix"
+        fill
+        priority
+        sizes="(max-width: 1024px) 100vw, 60vw"
+        className="object-contain object-center p-4 sm:p-6 lg:object-left"
+      />
+    </div>
+  );
+}
+
 export function SecurityPeopleSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [preferStatic, setPreferStatic] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -60,6 +77,16 @@ export function SecurityPeopleSection() {
   );
 
   useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMode = () => setPreferStatic(reduced.matches);
+    syncMode();
+    reduced.addEventListener("change", syncMode);
+    return () => reduced.removeEventListener("change", syncMode);
+  }, []);
+
+  useEffect(() => {
+    if (preferStatic) return;
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -131,7 +158,7 @@ export function SecurityPeopleSection() {
       cancelAnimationFrame(raf);
       video.removeEventListener("loadedmetadata", onLoaded);
     };
-  }, [scrollYProgress]);
+  }, [scrollYProgress, preferStatic]);
 
   return (
     <section ref={sectionRef} className="relative">
@@ -148,38 +175,65 @@ export function SecurityPeopleSection() {
             className="pointer-events-none absolute left-[-6%] top-1/2 z-[1] h-[55%] w-[55%] -translate-y-1/2 rounded-full bg-phoenix blur-[110px]"
           />
 
-          <motion.div
-            style={{ opacity: videoOpacity }}
-            className="absolute inset-0 z-[2] flex items-center justify-start p-6 sm:p-10 lg:p-12"
-          >
-            <div className="relative h-full w-full origin-left scale-[0.88]">
-              <video
-                ref={videoRef}
-                src="/scroll-cam.mp4"
-                muted
-                playsInline
-                preload="auto"
-                aria-label="Câmera Phoenix Security"
-                className="h-full w-full object-contain object-left"
-              />
-
-              {/* Brilho suave na lente, no ~100% */}
-              <motion.div
-                style={{ opacity: lensShine }}
-                className="pointer-events-none absolute left-[38%] top-[42%] z-[3] -translate-x-1/2 -translate-y-1/2 sm:left-[36%] sm:top-[40%]"
-                aria-hidden
-              >
-                <div className="relative h-16 w-16 sm:h-20 sm:w-20">
-                  <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.55)_0%,rgba(240,90,36,0.25)_35%,transparent_70%)] blur-[2px]" />
-                  <motion.div
-                    className="absolute inset-[28%] rounded-full bg-white/50 blur-[1px]"
-                    animate={{ opacity: [0.35, 0.7, 0.35], scale: [0.92, 1.05, 0.92] }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </div>
-              </motion.div>
+          <div className="absolute inset-0 z-[2] flex items-center justify-center p-4 sm:p-8 lg:justify-start lg:p-12">
+            <div className="relative h-full w-full max-w-md origin-center scale-[0.92] lg:hidden">
+              <CameraStill />
             </div>
-          </motion.div>
+
+            {preferStatic ? (
+              <div className="relative hidden h-full w-full origin-left scale-[0.88] lg:block">
+                <CameraStill />
+              </div>
+            ) : (
+              <motion.div
+                style={{ opacity: videoOpacity }}
+                className="relative hidden h-full w-full origin-left scale-[0.88] lg:block"
+              >
+                <Image
+                  src="/camera-phoenix.jpg"
+                  alt=""
+                  aria-hidden
+                  fill
+                  sizes="60vw"
+                  className="object-contain object-left p-6 opacity-50"
+                />
+
+                <video
+                  ref={videoRef}
+                  src="/scroll-cam.mp4"
+                  poster="/camera-phoenix.jpg"
+                  muted
+                  playsInline
+                  preload="metadata"
+                  aria-label="Câmera Phoenix Security"
+                  onError={() => setPreferStatic(true)}
+                  className="absolute inset-0 h-full w-full object-contain object-left"
+                />
+
+                <motion.div
+                  style={{ opacity: lensShine }}
+                  className="pointer-events-none absolute left-[38%] top-[42%] z-[3] -translate-x-1/2 -translate-y-1/2"
+                  aria-hidden
+                >
+                  <div className="relative h-20 w-20">
+                    <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.55)_0%,rgba(240,90,36,0.25)_35%,transparent_70%)] blur-[2px]" />
+                    <motion.div
+                      className="absolute inset-[28%] rounded-full bg-white/50 blur-[1px]"
+                      animate={{
+                        opacity: [0.35, 0.7, 0.35],
+                        scale: [0.92, 1.05, 0.92],
+                      }}
+                      transition={{
+                        duration: 2.4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </div>
 
           <FrameCorners />
 
@@ -198,17 +252,14 @@ export function SecurityPeopleSection() {
             Pessoas preparadas.
           </SectionHeading>
           <SectionLead>
-            Plataformas inteligentes operadas por profissionais
-            especializados. Nossa central funciona 24 horas com protocolos
-            personalizados para cada empreendimento.
+            Plataformas inteligentes operadas por profissionais especializados.
+            Nossa central funciona 24 horas com protocolos personalizados para
+            cada empreendimento.
           </SectionLead>
 
           <ul className="mt-8 space-y-4 border-t border-white/5 pt-8">
             {highlights.map((item) => (
-              <li
-                key={item}
-                className="flex gap-3 text-sm text-text-secondary"
-              >
+              <li key={item} className="flex gap-3 text-sm text-text-secondary">
                 <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-phoenix" />
                 {item}
               </li>

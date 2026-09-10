@@ -4,13 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { trackCtaClick } from "@/components/analytics/track";
+import { useMobileMenu } from "@/components/layout/MobileMenuContext";
 
 const hiddenOn = ["/avaliacao"];
 
 export function MobileConversionBar() {
   const pathname = usePathname();
+  const { isOpen } = useMobileMenu();
 
-  if (hiddenOn.includes(pathname)) return null;
+  if (hiddenOn.includes(pathname) || isOpen) return null;
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-bg-primary/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">

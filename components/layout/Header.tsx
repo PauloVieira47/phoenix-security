@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useMobileMenu } from "@/components/layout/MobileMenuContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -17,7 +18,7 @@ function isNavActive(pathname: string, href: string) {
 
 export function Header() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useMobileMenu();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
