@@ -11,7 +11,7 @@ export const contactInfo = {
     encodeURIComponent(
       "Olá! Gostaria de saber mais sobre as soluções da Phoenix Security.",
     ),
-  email: "contato@phoenixsecurity.com.br",
+  email: "phoenixsicuritybr@gmail.com",
   instagram: socialLinks.instagram,
   instagramHandle: socialLinks.instagramHandle,
   linkedin: "",
@@ -45,7 +45,10 @@ export const footerLinks = {
     { label: "Reconhecimento Facial", href: "/solucoes/reconhecimento-facial" },
     { label: "Gestão de Visitantes", href: "/solucoes/gestao-de-visitantes" },
     { label: "Alarmes e Sensores", href: "/solucoes/alarmes-e-sensores" },
-    { label: "Integração de Segurança", href: "/solucoes/integracao-de-seguranca" },
+    {
+      label: "Integração de Segurança",
+      href: "/solucoes/integracao-de-seguranca",
+    },
   ],
   empresa: [
     { label: "Sobre nós", href: "/sobre" },

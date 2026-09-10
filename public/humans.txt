@@ -1,6 +1,6 @@
 /* TEAM */
 Company: Phoenix Security
-Contact: contato@phoenixsecurity.com.br
+Contact: phoenixsicuritybr@gmail.com
 Location: R. Francisco Jacinto, 77, São Paulo, SP, Brasil
 
 /* SITE */
